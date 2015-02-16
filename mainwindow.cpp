@@ -126,6 +126,7 @@ unsigned char*** MainWindow::GetIm()
 
 void MainWindow::on_actionInformation_triggered()
 {
+
     InfoDialog *id = new InfoDialog(m_Header);
     id->show();
 }
@@ -139,7 +140,6 @@ void MainWindow::on_actionOpen_triggered()
     if (!TOMFILE.open(QIODevice::ReadOnly)) Alert("Cannot open file","File open error.");
     qint64 bytes = TOMFILE.read((char*) &m_Header, sizeof(m_Header));
     if (bytes != sizeof(m_Header)) Texit("Cannot read header");
-
 
 
 }

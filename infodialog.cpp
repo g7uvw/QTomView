@@ -3,12 +3,11 @@
 //#include "TomHeader.h"
 //#include "mainwindow.h"
 
-InfoDialog::InfoDialog(const thead &header,QWidget *parent) :
-    QDialog(parent),
+
+InfoDialog::InfoDialog(const thead &header,QWidget *parent) : QDialog(parent),
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
-
     ui->label_belong->setText(ui->label_belong->text()+header.owner);
     ui->label_run->setText(ui->label_run->text()+header.user);
     ui->label_date->setText(ui->label_date->text()+header.scan);
@@ -25,6 +24,10 @@ InfoDialog::InfoDialog(const thead &header,QWidget *parent) :
     ui->label_current->setText(ui->label_current->text()+QString::number(header.current));
     ui->label_projections->setText(ui->label_projections->text()+QString::number(header.num_proj));
 
+    unsigned int wibble = pMw->m_Header.xsize;
+    ui->lable_belong->setText(QString(wibble));
+    //ui->label_date->setText(pMw->m_Header.time);
+    //ui->lable_belong->setText(mw->m_Header.owner);
 
 }
 
