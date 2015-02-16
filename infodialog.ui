@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="lable_belong">
+    <widget class="QLabel" name="label_belong">
      <property name="text">
       <string>Belonging to: </string>
      </property>

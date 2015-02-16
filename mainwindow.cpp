@@ -126,8 +126,7 @@ unsigned char*** MainWindow::GetIm()
 
 void MainWindow::on_actionInformation_triggered()
 {
-    InfoDialog *id = new InfoDialog;
-    id->pMw = getpointer();
+    InfoDialog *id = new InfoDialog(m_Header);
     id->show();
 }
 
@@ -141,31 +140,6 @@ void MainWindow::on_actionOpen_triggered()
     qint64 bytes = TOMFILE.read((char*) &m_Header, sizeof(m_Header));
     if (bytes != sizeof(m_Header)) Texit("Cannot read header");
 
-//    //ints
-//    xsize = m_Header.xsize;
-//    ysize = m_Header.ysize;
-//    zsize = m_Header.zsize;
-//    num_samples = m_Header.num_samples;
-//    num_proj = m_Header.num_samples;
-//    num_blocks = m_Header.num_blocks;
-//    num_slices = m_Header.num_slices;
-//    num_frames = m_Header.num_frames;
 
-//    //floats
-//    scale = m_Header.scale;
-//    voltage = m_Header.voltage;
-//    current = m_Header.current;
-//    pixel_size = m_Header.pixel_size;
-//    exposure = m_Header.exposure;
-//    theta = m_Header.theta;
-//    time = m_Header.time;
-
-//    //Qstrings
-//    duration=m_Header.duration;
-//    owner=m_Header.owner;
-//    user=m_Header.user;
-//    specimen=m_Header.specimen;
-//    scan=m_Header.scan;
-//    comment=m_Header.comment;
 
 }
