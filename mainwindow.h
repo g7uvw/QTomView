@@ -3,6 +3,17 @@
 
 #include <QMainWindow>
 #include "TomHeader.h"
+#include "qtomviewview.h"
+
+class QTomViewView;
+QT_BEGIN_NAMESPACE
+class QAction;
+class QMenu;
+class QMdiArea;
+class QMdiSubWindow;
+class QSignalMapper;
+QT_END_NAMESPACE
+
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +30,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QMdiArea *mdiArea;
+    QSignalMapper *windowMapper;
+     QTomViewView *child;// = createMdiChild();
+
 
 public:
 
@@ -30,6 +45,7 @@ public:
     float scale,voltage,current,pixel_size,exposure;
     uint32_t theta;
     QString time,duration,owner,user,specimen,scan,comment;
+    QByteArray tomData;
 
 
 public:
@@ -39,16 +55,10 @@ public:
 protected:
     void AllocateMemory();
     unsigned char*** m_Im;
+    //void closeEvent(QCloseEvent *event);
+    void StartMessage(void);
 
-    // afx_msg void OnUpdateViewSlice(CCmdUI* pCmdUI);
-    // afx_msg void OnUpdateInfobutton(CCmdUI* pCmdUI);
-    // afx_msg void OnUpdateFilePrint(CCmdUI* pCmdUI);
-    // afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
-    // afx_msg void OnUpdateViewZoom(CCmdUI* pCmdUI);
-    // afx_msg void OnUpdateExportBitmap(CCmdUI* pCmdUI);
-    // afx_msg void OnUpdateContrastbutton(CCmdUI* pCmdUI);
-    //}}AFX_MSG
-    // DECLARE_MESSAGE_MAP()
+
 private:
     unsigned char** m_ImBuffer;
 public:
@@ -56,8 +66,7 @@ public:
 protected:
     unsigned char** m_ImRow;
 public:
-    //afx_msg void OnExportCrop();
-    //afx_msg void OnExportPvlfordrishti();
+
 protected:
     QString m_FilePath;
     QString m_FileName;
@@ -78,6 +87,8 @@ public:
 private slots:
     void on_actionInformation_triggered();
     void on_actionOpen_triggered();
+    QTomViewView *createMdiChild();
+    void on_actionExit_triggered();
 };
 
 #endif // MAINWINDOW_H

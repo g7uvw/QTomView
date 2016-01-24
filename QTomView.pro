@@ -14,12 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    infodialog.cpp
+    infodialog.cpp \
+    qtomviewview.cpp
 
 HEADERS  += mainwindow.h \
     TomHeader.h \
     TomView.h \
-    infodialog.h
+    infodialog.h \
+    qtomviewview.h
 
 FORMS    += mainwindow.ui \
     infodialog.ui

@@ -1,9 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "infodialog.h"
+#include"qtomviewview.h"
 #include <QMessageBox>
 #include <QFile>
 #include <QFileDialog>
+#include <QtWidgets>
+#include <QByteArray>
 
 
 
@@ -29,7 +32,42 @@ MainWindow::MainWindow(QWidget *parent) :
     m_Header.xsize = 0;
     m_New = false;
 
+    mdiArea = new QMdiArea;
+    mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setCentralWidget(mdiArea);
 
+    //connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+    //        this, SLOT(updateMenus()));
+    //windowMapper = new QSignalMapper(this);
+    //connect(windowMapper, SIGNAL(mapped(QWidget*)),
+    //        this, SLOT(setActiveSubWindow(QWidget*)));
+
+    child = createMdiChild();
+    //child->newFile();
+    child->autoFillBackground();
+    child->showMaximized();
+
+    //StartMessage();
+}
+
+
+MainWindow::~MainWindow()
+{
+    int a;
+    if (m_Im)
+    {
+        delete m_Im;
+        delete m_ImRow;
+        for (a=0; a<m_Header.zsize; ++a)
+            delete m_ImBuffer[a];
+        delete m_ImBuffer;
+    }
+    delete ui;
+}
+
+void MainWindow::StartMessage()
+{
     QString Message;
     Message += "The Mucat X-ray microtomography research facility ";
     Message += "is designed, run and under constant development by ";
@@ -51,19 +89,13 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 
-MainWindow::~MainWindow()
+QTomViewView *MainWindow::createMdiChild()
 {
-    int a;
-    if (m_Im)
-    {
-        delete m_Im;
-        delete m_ImRow;
-        for (a=0; a<m_Header.zsize; ++a)
-            delete m_ImBuffer[a];
-        delete m_ImBuffer;
-    }
-    delete ui;
+    QTomViewView *child = new QTomViewView;
+    mdiArea->addSubWindow(child);
+    return child;
 }
+
 
 void MainWindow::AllocateMemory()
 {
@@ -135,11 +167,35 @@ void MainWindow::on_actionInformation_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
+
     m_FileName = QFileDialog::getOpenFileName(this, tr("Open File"),"",tr("Files (*.tom)"));
     QFile TOMFILE(m_FileName);
     if (!TOMFILE.open(QIODevice::ReadOnly)) Alert("Cannot open file","File open error.");
     qint64 bytes = TOMFILE.read((char*) &m_Header, sizeof(m_Header));
-    if (bytes != sizeof(m_Header)) Texit("Cannot read header");
+    if (bytes != sizeof(m_Header)) Alert("Cannot read header", "File open error.");
+
+   //uchar pixDataRGB[] = {255, 0, 0, 0, 0, 255, 0, 0, 255, 255, 0, 0}; // Red, Blue, Red, Blue
+   //QImage img(pixDataRGB, 2, 2, 6, QImage::Format_RGB888); // 2 pixels width, 2 pixels height, 6 bytes per line, RGB888 format
+   //QImage scaled = img.scaled(100, 100); // Scale image to show results better
+   //QPixmap pix = QPixmap::fromImage(scaled); // Create pixmap from image
+   //ui->label->setPixmap(pix); // Show result on a form
+
+   tomData = TOMFILE.readAll();
+
+   //someFunction((unsigned char*)(inArray.data()), out);
+
+   QImage slice(((unsigned char*)(tomData.data()),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8)));
+
+   //slice = QImage::fromData(tomData.data(),QImage::Format_Indexed8);
+
+    child->wipe();
+    child->showSlice(slice);
+
+}
 
 
+
+void MainWindow::on_actionExit_triggered()
+{
+    QApplication::quit();
 }
