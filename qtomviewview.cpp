@@ -38,9 +38,12 @@ void QTomViewView::wipe()
 
 void QTomViewView::showSlice(QImage &slice)
 {
-    QGraphicsPixmapItem item( QPixmap::fromImage(slice));
+    scene->clear();
+    scene->addText("Image here!");
+    QGraphicsPixmapItem item(QPixmap::fromImage(slice));
     scene->addItem(&item);
     scene->update();
+    view->update();
 }
 
 

@@ -179,16 +179,21 @@ void MainWindow::on_actionOpen_triggered()
    //QImage scaled = img.scaled(100, 100); // Scale image to show results better
    //QPixmap pix = QPixmap::fromImage(scaled); // Create pixmap from image
    //ui->label->setPixmap(pix); // Show result on a form
+    QVector<QRgb> colorTable;
+        for (int i = 0; i < 256; i++)
+            colorTable.push_back(QColor(i, i, i).rgb());
 
    tomData = TOMFILE.readAll();
 
    //someFunction((unsigned char*)(inArray.data()), out);
 
-   QImage slice(((unsigned char*)(tomData.data()),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8)));
+   //QImage slice(((unsigned char*)(tomData.data()),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8)));
 
+   QImage  slice((unsigned char *) tomData.data(),200,200,600,QImage::Format_Indexed8);
+    slice.setColorTable(colorTable);
    //slice = QImage::fromData(tomData.data(),QImage::Format_Indexed8);
 
-    child->wipe();
+    //child->wipe();
     child->showSlice(slice);
 
 }
