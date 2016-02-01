@@ -185,15 +185,9 @@ void MainWindow::on_actionOpen_triggered()
 
    tomData = TOMFILE.readAll();
 
-   //someFunction((unsigned char*)(inArray.data()), out);
 
-   //QImage slice(((unsigned char*)(tomData.data()),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8)));
-
-   QImage  slice((unsigned char *) tomData.data(),200,200,600,QImage::Format_Indexed8);
+   QImage  slice((unsigned char *) tomData.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
     slice.setColorTable(colorTable);
-   //slice = QImage::fromData(tomData.data(),QImage::Format_Indexed8);
-
-    //child->wipe();
     child->showSlice(slice);
 
 }

@@ -40,8 +40,10 @@ void QTomViewView::showSlice(QImage &slice)
 {
     scene->clear();
     scene->addText("Image here!");
-    QGraphicsPixmapItem item(QPixmap::fromImage(slice));
-    scene->addItem(&item);
+    QPixmap item(QPixmap::fromImage(slice));
+    //QPixmap test(200,200);
+    scene->addPixmap(item);
+    //scene->addPixmap(test);
     scene->update();
     view->update();
 }
