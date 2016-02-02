@@ -94,7 +94,31 @@
    <addaction name="menuTags"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="separator"/>
+   <addaction name="actionConstrast"/>
+   <addaction name="separator"/>
+   <addaction name="actionXY_Slice"/>
+   <addaction name="actionYZ_Slice"/>
+   <addaction name="actionXZ_Slice"/>
+   <addaction name="separator"/>
+   <addaction name="actionInformation"/>
+  </widget>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/Open_file.png</normaloff>:/Icons/icons/Open_file.png</iconset>
+   </property>
    <property name="text">
     <string>Open</string>
    </property>
@@ -140,8 +164,12 @@
    </property>
   </action>
   <action name="actionConstrast">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/Color_wheel.png</normaloff>:/Icons/icons/Color_wheel.png</iconset>
+   </property>
    <property name="text">
-    <string>1</string>
+    <string>Contrast/Brightness</string>
    </property>
   </action>
   <action name="action2">
@@ -215,6 +243,10 @@
    </property>
   </action>
   <action name="actionInformation">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/Info.png</normaloff>:/Icons/icons/Info.png</iconset>
+   </property>
    <property name="text">
     <string>Information</string>
    </property>
@@ -244,8 +276,37 @@
     <string>300%</string>
    </property>
   </action>
+  <action name="actionXY_Slice">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/XY.ico</normaloff>:/Icons/icons/XY.ico</iconset>
+   </property>
+   <property name="text">
+    <string>XY Slice</string>
+   </property>
+  </action>
+  <action name="actionYZ_Slice">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/YZ.ico</normaloff>:/Icons/icons/YZ.ico</iconset>
+   </property>
+   <property name="text">
+    <string>YZ_Slice</string>
+   </property>
+  </action>
+  <action name="actionXZ_Slice">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/XZ.ico</normaloff>:/Icons/icons/XZ.ico</iconset>
+   </property>
+   <property name="text">
+    <string>XZ Slice</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="qtomviewresources.qrc"/>
+ </resources>
  <connections/>
 </ui>

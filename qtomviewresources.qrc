@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Icons">
+        <file>icons/XZ.ico</file>
+        <file>icons/YZ.ico</file>
+        <file>icons/XY.ico</file>
+        <file>icons/Color_wheel.png</file>
+        <file>icons/Info.png</file>
+        <file>icons/Open_file.png</file>
+    </qresource>
+</RCC>

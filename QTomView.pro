@@ -25,3 +25,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     infodialog.ui
+
+RESOURCES += \
+    qtomviewresources.qrc
