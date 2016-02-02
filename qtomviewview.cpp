@@ -28,40 +28,18 @@ QTomViewView::QTomViewView()
 
 void QTomViewView::wipe()
 {
-    //QMessageBox msgBox;
-    //msgBox.setText("Click OK to crash!");
-    //msgBox.exec();
     scene->clear();
-
-
 }
 
 void QTomViewView::showSlice(QImage &slice)
 {
     scene->clear();
-    scene->addText("Image here!");
-    QPixmap item(QPixmap::fromImage(slice));
-    //QPixmap test(200,200);
-    scene->addPixmap(item);
-    //scene->addPixmap(test);
+    QPixmap currentslice(QPixmap::fromImage(slice));
+    scene->addPixmap(currentslice);
     scene->update();
     view->update();
 }
 
-
-bool QTomViewView::loadFile(const QString &fileName)
-{
-    QFile file(fileName);
-    setCurrentFile(fileName);
-    return true;
-}
-
-void QTomViewView::setCurrentFile(const QString &fileName)
-{
-    curFile = QFileInfo(fileName).canonicalFilePath();
-    isUntitled = false;
-    setWindowModified(false);
-}
 
 QString QTomViewView::strippedName(const QString &fullFileName)
 {
@@ -69,3 +47,8 @@ QString QTomViewView::strippedName(const QString &fullFileName)
 }
 
 
+void QTomViewView::zoom(int zoomlevelpercent)
+{
+    view->scale(view->x()*zoomlevelpercent,view->y()*zoomlevelpercent);
+    view->update();
+}

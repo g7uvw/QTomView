@@ -32,7 +32,7 @@ private:
     Ui::MainWindow *ui;
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
-     QTomViewView *child;// = createMdiChild();
+    QTomViewView *child;// = createMdiChild();
 
 
 public:
@@ -48,28 +48,13 @@ public:
     QByteArray tomData;
 
 
-public:
-    unsigned char*** GetIm();
-
 
 protected:
-    void AllocateMemory();
-    unsigned char*** m_Im;
-    //void closeEvent(QCloseEvent *event);
+
     void StartMessage(void);
-
-
-private:
-    unsigned char** m_ImBuffer;
-public:
-    //afx_msg void OnUpdateViewContrast(CCmdUI *pCmdUI);
-protected:
-    unsigned char** m_ImRow;
-public:
-
-protected:
     QString m_FilePath;
     QString m_FileName;
+
 public:
     int m_MinX;
     int m_MaxX;
@@ -78,17 +63,19 @@ public:
     int m_MinZ;
     int m_MaxZ;
     bool m_CropTags;
-    //afx_msg void OnExportImagej();
-    //afx_msg void OnCopymetadata();
-    //afx_msg void OnUpdateCopymetadata(CCmdUI *pCmdUI);
     void Texit(QString Message);
     void Alert(QString Message, QString Title);
 
 private slots:
+    QTomViewView *createMdiChild();
     void on_actionInformation_triggered();
     void on_actionOpen_triggered();
-    QTomViewView *createMdiChild();
     void on_actionExit_triggered();
+    void on_action25_triggered();
+    void on_action50_triggered();
+    void on_action100_triggered();
+    void on_action200_triggered();
+    void on_action300_triggered();
 };
 
 #endif // MAINWINDOW_H

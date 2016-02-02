@@ -13,8 +13,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_ImRow(NULL)
-  , m_FilePath((""))
+    m_FilePath((""))
   , m_FileName((""))
   , m_MinX(0)
   , m_MaxX(0)
@@ -26,25 +25,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     m_Empty = true;
-    m_Im = NULL;
-    m_ImRow = NULL;
-    m_ImBuffer = NULL;
     m_Header.xsize = 0;
     m_New = false;
-
     mdiArea = new QMdiArea;
     mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setCentralWidget(mdiArea);
 
-    //connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-    //        this, SLOT(updateMenus()));
-    //windowMapper = new QSignalMapper(this);
-    //connect(windowMapper, SIGNAL(mapped(QWidget*)),
-    //        this, SLOT(setActiveSubWindow(QWidget*)));
-
     child = createMdiChild();
-    //child->newFile();
     child->autoFillBackground();
     child->showMaximized();
 
@@ -54,15 +42,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    int a;
-    if (m_Im)
-    {
-        delete m_Im;
-        delete m_ImRow;
-        for (a=0; a<m_Header.zsize; ++a)
-            delete m_ImBuffer[a];
-        delete m_ImBuffer;
-    }
     delete ui;
 }
 
@@ -97,43 +76,7 @@ QTomViewView *MainWindow::createMdiChild()
 }
 
 
-void MainWindow::AllocateMemory()
-{
-    int a,b;
 
-    long yzArea = (long)m_Header.ysize*m_Header.zsize;
-    long xyArea = (long)m_Header.xsize*m_Header.ysize;
-
-    if (m_Im)
-    {
-        delete m_Im;
-        delete m_ImRow;
-        for (a=0; a<m_Header.zsize; ++a)
-            delete m_ImBuffer[a];
-        delete m_ImBuffer;
-    }
-    if ((m_ImBuffer = new unsigned char*[m_Header.zsize]) == NULL)
-        Texit("Insufficient Memory");
-    for (a=0; a<m_Header.zsize; ++a)
-    {
-        if ((m_ImBuffer[a] = new unsigned char[xyArea]) == NULL)
-            Texit("Insufficient Memory");
-    }
-    if ((m_ImRow = new unsigned char*[yzArea]) == NULL)
-        Texit("Insufficient Memory");
-    if ((m_Im = new unsigned char**[m_Header.zsize]) == NULL)
-        Texit("Insufficient Memory");
-
-    for (a=0; a< m_Header.zsize; ++a)
-    {
-        for (b=0; b<m_Header.ysize; ++b)
-            m_ImRow[a*m_Header.ysize+b] = &(m_ImBuffer[a][b*m_Header.xsize]);
-        m_Im[a] = &m_ImRow[a*m_Header.ysize];
-    }
-
-
-
-}
 
 void MainWindow::Texit(QString Message)
 {
@@ -150,15 +93,11 @@ void MainWindow::Alert(QString Message, QString Title)
     msgBox.exec();
 }
 
-unsigned char*** MainWindow::GetIm()
-{
-    return m_Im;
-}
+
 
 
 void MainWindow::on_actionInformation_triggered()
 {
-
     InfoDialog *id = new InfoDialog(m_Header);
     id->show();
 }
@@ -174,22 +113,20 @@ void MainWindow::on_actionOpen_triggered()
     qint64 bytes = TOMFILE.read((char*) &m_Header, sizeof(m_Header));
     if (bytes != sizeof(m_Header)) Alert("Cannot read header", "File open error.");
 
-   //uchar pixDataRGB[] = {255, 0, 0, 0, 0, 255, 0, 0, 255, 255, 0, 0}; // Red, Blue, Red, Blue
-   //QImage img(pixDataRGB, 2, 2, 6, QImage::Format_RGB888); // 2 pixels width, 2 pixels height, 6 bytes per line, RGB888 format
-   //QImage scaled = img.scaled(100, 100); // Scale image to show results better
-   //QPixmap pix = QPixmap::fromImage(scaled); // Create pixmap from image
-   //ui->label->setPixmap(pix); // Show result on a form
+
     QVector<QRgb> colorTable;
-        for (int i = 0; i < 256; i++)
-            colorTable.push_back(QColor(i, i, i).rgb());
+    for (int i = 0; i < 256; i++)
+        colorTable.push_back(QColor(i, i, i).rgb());
 
-   tomData = TOMFILE.readAll();
+    tomData = TOMFILE.readAll();
 
-
-   QImage  slice((unsigned char *) tomData.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
-    slice.setColorTable(colorTable);
-    child->showSlice(slice);
-
+    unsigned int centralslice = (m_Header.num_slices / 2);
+    QByteArray CentralXYSlicearray(tomData.mid(centralslice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
+    QImage  CentralXYSlice((unsigned char *) CentralXYSlicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    CentralXYSlice.setColorTable(colorTable);
+    child->resize(m_Header.xsize,m_Header.ysize);
+    child->showSlice(CentralXYSlice);
+    child->setWindowTitle(QFileInfo(m_FileName).fileName());
 }
 
 
@@ -197,4 +134,34 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+}
+
+//void MainWindow::on_actionZoom_triggered()
+//{
+//    child->zoom(2);
+//}
+
+void MainWindow::on_action25_triggered()
+{
+
+}
+
+void MainWindow::on_action50_triggered()
+{
+
+}
+
+void MainWindow::on_action100_triggered()
+{
+
+}
+
+void MainWindow::on_action200_triggered()
+{
+
+}
+
+void MainWindow::on_action300_triggered()
+{
+
 }

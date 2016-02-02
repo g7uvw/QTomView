@@ -18,6 +18,7 @@ public:
     static QImage slice;
     void wipe();
     void showSlice(QImage &slice);
+    void zoom(int zoomlevelpercent);
 
 protected:
     //void closeEvent(QCloseEvent *event);
