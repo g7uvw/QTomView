@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
   , m_MinZ(0)
   , m_MaxZ(0)
   , m_CropTags(false)
+  , m_CurrentSlice(0)
 {
     ui->setupUi(this);
     m_Empty = true;
@@ -121,6 +122,7 @@ void MainWindow::on_actionOpen_triggered()
     tomData = TOMFILE.readAll();
 
     unsigned int centralslice = (m_Header.num_slices / 2);
+    m_CurrentSlice = centralslice;
     QByteArray CentralXYSlicearray(tomData.mid(centralslice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
     QImage  CentralXYSlice((unsigned char *) CentralXYSlicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
     CentralXYSlice.setColorTable(colorTable);
@@ -164,4 +166,27 @@ void MainWindow::on_action200_triggered()
 void MainWindow::on_action300_triggered()
 {
 
+}
+
+void MainWindow::on_actionDown_Slice_triggered()
+{
+    if (m_CurrentSlice == 1)
+        m_CurrentSlice = 0;
+    else
+        m_CurrentSlice--;
+
+    QByteArray Slicearray(tomData.mid(m_CurrentSlice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
+    QImage  Slice((unsigned char *) Slicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    child->showSlice(Slice);
+}
+
+void MainWindow::on_actionUpSlice_triggered()
+{
+    if(m_CurrentSlice == m_Header.num_slices - 1)
+        m_CurrentSlice = m_Header.num_slices;
+    else
+        m_CurrentSlice++;
+    QByteArray Slicearray(tomData.mid(m_CurrentSlice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
+    QImage  Slice((unsigned char *) Slicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    child->showSlice(Slice);
 }

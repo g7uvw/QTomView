@@ -62,6 +62,7 @@ public:
     int m_MaxY;
     int m_MinZ;
     int m_MaxZ;
+    unsigned int m_CurrentSlice;
     bool m_CropTags;
     void Texit(QString Message);
     void Alert(QString Message, QString Title);
@@ -76,6 +77,8 @@ private slots:
     void on_action100_triggered();
     void on_action200_triggered();
     void on_action300_triggered();
+    void on_actionDown_Slice_triggered();
+    void on_actionUpSlice_triggered();
 };
 
 #endif // MAINWINDOW_H

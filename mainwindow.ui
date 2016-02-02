@@ -108,6 +108,8 @@
    <addaction name="separator"/>
    <addaction name="actionConstrast"/>
    <addaction name="separator"/>
+   <addaction name="actionUpSlice"/>
+   <addaction name="actionDown_Slice"/>
    <addaction name="actionXY_Slice"/>
    <addaction name="actionYZ_Slice"/>
    <addaction name="actionXZ_Slice"/>
@@ -301,6 +303,24 @@
    </property>
    <property name="text">
     <string>XZ Slice</string>
+   </property>
+  </action>
+  <action name="actionUpSlice">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/Up.png</normaloff>:/Icons/icons/Up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Up</string>
+   </property>
+  </action>
+  <action name="actionDown_Slice">
+   <property name="icon">
+    <iconset resource="qtomviewresources.qrc">
+     <normaloff>:/Icons/icons/Down.png</normaloff>:/Icons/icons/Down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Down Slice</string>
    </property>
   </action>
  </widget>
