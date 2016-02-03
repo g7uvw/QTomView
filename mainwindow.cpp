@@ -120,6 +120,7 @@ void MainWindow::on_actionOpen_triggered()
         colorTable.push_back(QColor(i, i, i).rgb());
 
     tomData = TOMFILE.readAll();
+    TOMFILE.close();
 
     unsigned int centralslice = (m_Header.num_slices / 2);
     m_CurrentSlice = centralslice;
