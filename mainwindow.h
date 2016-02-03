@@ -32,8 +32,10 @@ private:
     Ui::MainWindow *ui;
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
-    QTomViewView *child;// = createMdiChild();
-
+    QTomViewView *child;
+    unsigned char*** m_Im;
+    unsigned char** m_ImBuffer;
+    unsigned char** m_ImRow;
 
 public:
 
@@ -46,12 +48,14 @@ public:
     uint32_t theta;
     QString time,duration,owner,user,specimen,scan,comment;
     QByteArray tomData;
+    QVector<QRgb> colorTable;
 
 
 
 protected:
-
+    void AllocateMemory(void);
     void StartMessage(void);
+    void CreateDefaultLookup(void);
     QString m_FilePath;
     QString m_FileName;
 

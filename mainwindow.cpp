@@ -43,7 +43,52 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    int a;
+        if (m_Im)
+        {
+            delete m_Im;
+            delete m_ImRow;
+            for (a=0; a<m_Header.zsize; ++a)
+                delete m_ImBuffer[a];
+            delete m_ImBuffer;
+        }
     delete ui;
+}
+
+
+void MainWindow::AllocateMemory()
+{
+    int a,b;
+//	long Volume = (long)m_Header.xsize*m_Header.ysize*m_Header.zsize;
+    long yzArea = (long)m_Header.ysize*m_Header.zsize;
+    long xyArea = (long)m_Header.xsize*m_Header.ysize;
+
+    if (m_Im)
+    {
+        delete m_Im;
+        delete m_ImRow;
+        for (a=0; a<m_Header.zsize; ++a)
+            delete m_ImBuffer[a];
+        delete m_ImBuffer;
+    }
+    if ((m_ImBuffer = new unsigned char*[m_Header.zsize]) == NULL)
+        Texit("Insufficient Memory");
+    for (a=0; a<m_Header.zsize; ++a)
+    {
+        if ((m_ImBuffer[a] = new unsigned char[xyArea]) == NULL)
+            Texit("Insufficient Memory");
+    }
+    if ((m_ImRow = new unsigned char*[yzArea]) == NULL)
+        Texit("Insufficient Memory");
+    if ((m_Im = new unsigned char**[m_Header.zsize]) == NULL)
+        Texit("Insufficient Memory");
+
+    for (a=0; a< m_Header.zsize; ++a)
+    {
+        for (b=0; b<m_Header.ysize; ++b)
+            m_ImRow[a*m_Header.ysize+b] = &(m_ImBuffer[a][b*m_Header.xsize]);
+        m_Im[a] = &m_ImRow[a*m_Header.ysize];
+    }
 }
 
 void MainWindow::StartMessage()
@@ -104,31 +149,40 @@ void MainWindow::on_actionInformation_triggered()
 }
 
 
+void MainWindow::CreateDefaultLookup()
+{
+    QVector<QRgb> colorTable;
+    for (int i = 0; i < 256; i++)
+        colorTable.push_back(QColor(i, i, i).rgb());
+}
 
 void MainWindow::on_actionOpen_triggered()
 {
-
+    unsigned int z, Area;
     m_FileName = QFileDialog::getOpenFileName(this, tr("Open File"),"",tr("Files (*.tom)"));
     QFile TOMFILE(m_FileName);
     if (!TOMFILE.open(QIODevice::ReadOnly)) Alert("Cannot open file","File open error.");
     qint64 bytes = TOMFILE.read((char*) &m_Header, sizeof(m_Header));
     if (bytes != sizeof(m_Header)) Alert("Cannot read header", "File open error.");
 
+    AllocateMemory();
+    Area = m_Header.xsize*m_Header.ysize;
+            for (z=0; z<m_Header.zsize; ++z)
+                TOMFILE.read((char*)m_ImBuffer[z], Area);
 
-    QVector<QRgb> colorTable;
-    for (int i = 0; i < 256; i++)
-        colorTable.push_back(QColor(i, i, i).rgb());
-
-    tomData = TOMFILE.readAll();
+    //tomData = TOMFILE.readAll();
     TOMFILE.close();
 
-    unsigned int centralslice = (m_Header.num_slices / 2);
-    m_CurrentSlice = centralslice;
-    QByteArray CentralXYSlicearray(tomData.mid(centralslice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
-    QImage  CentralXYSlice((unsigned char *) CentralXYSlicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
-    CentralXYSlice.setColorTable(colorTable);
-    child->resize(m_Header.xsize,m_Header.ysize);
-    child->showSlice(CentralXYSlice);
+//    unsigned int centralslice = (m_Header.num_slices / 2);
+//    m_CurrentSlice = centralslice;
+//    QByteArray CentralXYSlicearray(tomData.mid(centralslice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
+//    QImage  CentralXYSlice((unsigned char *) CentralXYSlicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+
+//    CreateDefaultLookup();
+
+//    CentralXYSlice.setColorTable(colorTable);
+//    child->resize(m_Header.xsize,m_Header.ysize);
+//    child->showSlice(CentralXYSlice);
     child->setWindowTitle(QFileInfo(m_FileName).fileName());
 }
 
