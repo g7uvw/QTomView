@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
   , m_MaxY(0)
   , m_MinZ(0)
   , m_MaxZ(0)
-  , m_CropTags(false)
   , m_CurrentSlice(0)
+  , m_CropTags(false)
 {
     ui->setupUi(this);
     m_Empty = true;
