@@ -56,6 +56,7 @@ protected:
     void AllocateMemory(void);
     void StartMessage(void);
     void CreateDefaultLookup(void);
+    void UpdateSlice(void);
     QString m_FilePath;
     QString m_FileName;
 
@@ -67,6 +68,7 @@ public:
     int m_MinZ;
     int m_MaxZ;
     unsigned int m_CurrentSlice;
+    unsigned int m_Plane;
     bool m_CropTags;
     void Texit(QString Message);
     void Alert(QString Message, QString Title);
@@ -83,6 +85,9 @@ private slots:
     void on_action300_triggered();
     void on_actionDown_Slice_triggered();
     void on_actionUpSlice_triggered();
+    void on_actionXY_Slice_triggered();
+    void on_actionYZ_Slice_triggered();
+    void on_actionXZ_Slice_triggered();
 };
 
 #endif // MAINWINDOW_H

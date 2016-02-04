@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "infodialog.h"
 #include"qtomviewview.h"
+#include "TomView.h"
 #include <QMessageBox>
 #include <QFile>
 #include <QFileDialog>
@@ -235,4 +236,62 @@ void MainWindow::on_actionUpSlice_triggered()
         m_CurrentSlice++;
     QImage  Slice(m_ImBuffer[m_CurrentSlice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
     child->showSlice(Slice);
+}
+
+void MainWindow::on_actionXY_Slice_triggered()
+{
+    m_Plane = XYPLANE;
+}
+
+void MainWindow::on_actionYZ_Slice_triggered()
+{
+    m_Plane = YZPLANE;
+}
+
+void MainWindow::on_actionXZ_Slice_triggered()
+{
+    m_Plane = XZPLANE;
+}
+
+void MainWindow::UpdateSlice()
+{
+    unsigned int x,y;
+    unsigned char *Pix, **Slice, *Bmp; //***VIm
+    unsigned int m_YSize,m_XSize,m_ZSize;
+    m_YSize = m_Header.ysize;
+    m_XSize = m_Header.xsize;
+    m_ZSize = m_Header.zsize;
+    switch(m_Plane)
+    {
+    case XYPLANE:
+        for (y=0; y<m_YSize; ++y)
+        {
+            Pix = m_Im[m_ZSlice][y];
+            Bmp = m_BitmapArray[y];
+            for (x=0; x<m_XSize; ++x)
+                *Bmp++ = Pix[x];
+        }
+        break;
+    case XZPLANE:
+        for (y=0; y<m_YSize; ++y)
+        {
+            Bmp = m_BitmapArray[y];
+            Pix = m_Im[y][m_YSlice];
+            for (x=0; x<m_XSize; ++x)
+                *Bmp++ = Pix[x];
+        }
+        break;
+    case YZPLANE:
+        for (y=0; y<m_YSize; ++y)
+        {
+            Bmp = m_BitmapArray[y];
+            Slice = m_Im[y];
+            for (x=0; x<m_XSize; ++x)
+                *Bmp++ = Slice[x][m_XSlice];
+        }
+        break;
+    }
+    m_BMPSlice = m_Slice;
+
+    child->showSlice(Bmp);
 }
