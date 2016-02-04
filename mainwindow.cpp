@@ -172,13 +172,14 @@ void MainWindow::on_actionOpen_triggered()
 
     //tomData = TOMFILE.readAll();
     TOMFILE.close();
+    CreateDefaultLookup();
 
 //    unsigned int centralslice = (m_Header.num_slices / 2);
 //    m_CurrentSlice = centralslice;
 //    QByteArray CentralXYSlicearray(tomData.mid(centralslice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
 //    QImage  CentralXYSlice((unsigned char *) CentralXYSlicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
 
-//    CreateDefaultLookup();
+//
 
 //    CentralXYSlice.setColorTable(colorTable);
 //    child->resize(m_Header.xsize,m_Header.ysize);
