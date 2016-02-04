@@ -173,17 +173,12 @@ void MainWindow::on_actionOpen_triggered()
     //tomData = TOMFILE.readAll();
     TOMFILE.close();
     CreateDefaultLookup();
+    unsigned int centralslice = m_CurrentSlice = (m_Header.num_slices / 2);
+    QImage  CentralXYSlice(m_ImBuffer[centralslice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
 
-//    unsigned int centralslice = (m_Header.num_slices / 2);
-//    m_CurrentSlice = centralslice;
-//    QByteArray CentralXYSlicearray(tomData.mid(centralslice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
-//    QImage  CentralXYSlice((unsigned char *) CentralXYSlicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
-
-//
-
-//    CentralXYSlice.setColorTable(colorTable);
-//    child->resize(m_Header.xsize,m_Header.ysize);
-//    child->showSlice(CentralXYSlice);
+    CentralXYSlice.setColorTable(colorTable);
+    child->resize(m_Header.xsize,m_Header.ysize);
+    child->showSlice(CentralXYSlice);
     child->setWindowTitle(QFileInfo(m_FileName).fileName());
 }
 
@@ -194,10 +189,7 @@ void MainWindow::on_actionExit_triggered()
     QApplication::quit();
 }
 
-//void MainWindow::on_actionZoom_triggered()
-//{
-//    child->zoom(2);
-//}
+
 
 void MainWindow::on_action25_triggered()
 {
@@ -230,9 +222,8 @@ void MainWindow::on_actionDown_Slice_triggered()
         m_CurrentSlice = 0;
     else
         m_CurrentSlice--;
+    QImage  Slice(m_ImBuffer[m_CurrentSlice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
 
-    QByteArray Slicearray(tomData.mid(m_CurrentSlice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
-    QImage  Slice((unsigned char *) Slicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
     child->showSlice(Slice);
 }
 
@@ -242,7 +233,6 @@ void MainWindow::on_actionUpSlice_triggered()
         m_CurrentSlice = m_Header.num_slices;
     else
         m_CurrentSlice++;
-    QByteArray Slicearray(tomData.mid(m_CurrentSlice*m_Header.xsize*m_Header.ysize),m_Header.xsize*m_Header.ysize);
-    QImage  Slice((unsigned char *) Slicearray.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    QImage  Slice(m_ImBuffer[m_CurrentSlice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
     child->showSlice(Slice);
 }

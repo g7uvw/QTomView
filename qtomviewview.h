@@ -14,14 +14,13 @@ public:
     bool loadFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
-    //static QByteArray tomData;
     static QImage slice;
     void wipe();
     void showSlice(QImage &slice);
     void zoom(int zoomlevelpercent);
 
 protected:
-    //void closeEvent(QCloseEvent *event);
+
 
 private:
     void setCurrentFile(const QString &fileName);
@@ -31,8 +30,6 @@ private:
 
     QString curFile;
     bool isUntitled;
-   // QGraphicsScene *view;
-   // QPixmap slice;
 
 };
 
