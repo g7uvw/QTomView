@@ -36,6 +36,8 @@ private:
     unsigned char*** m_Im;
     unsigned char** m_ImBuffer;
     unsigned char** m_ImRow;
+    unsigned char** m_BitmapArray;
+    unsigned char* m_BitmapBuffer;
 
 public:
 
@@ -69,6 +71,7 @@ public:
     int m_MaxZ;
     unsigned int m_CurrentSlice;
     unsigned int m_Plane;
+    unsigned int m_XSlice, m_YSlice, m_ZSlice, m_BMPSlice, m_BMPPlane;
     bool m_CropTags;
     void Texit(QString Message);
     void Alert(QString Message, QString Title);

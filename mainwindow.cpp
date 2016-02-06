@@ -29,6 +29,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_Empty = true;
     m_Header.xsize = 0;
     m_New = false;
+    m_XSlice = m_YSlice = m_ZSlice = m_BMPSlice = 0;
+    m_BitmapArray = NULL;
+    m_BitmapBuffer = NULL;
+    m_Plane = m_BMPPlane = XYPLANE;
+
     mdiArea = new QMdiArea;
     mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -174,7 +179,7 @@ void MainWindow::on_actionOpen_triggered()
     //tomData = TOMFILE.readAll();
     TOMFILE.close();
     CreateDefaultLookup();
-    unsigned int centralslice = m_CurrentSlice = (m_Header.num_slices / 2);
+    unsigned int centralslice = m_CurrentSlice = m_ZSlice = (m_Header.num_slices / 2);
     QImage  CentralXYSlice(m_ImBuffer[centralslice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
 
     CentralXYSlice.setColorTable(colorTable);
@@ -291,7 +296,7 @@ void MainWindow::UpdateSlice()
         }
         break;
     }
-    m_BMPSlice = m_Slice;
-
-    child->showSlice(Bmp);
+    m_BMPSlice = m_CurrentSlice;
+    QImage  qISlice(Bmp,m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    child->showSlice(qISlice);
 }
