@@ -246,16 +246,19 @@ void MainWindow::on_actionUpSlice_triggered()
 void MainWindow::on_actionXY_Slice_triggered()
 {
     m_Plane = XYPLANE;
+    UpdateSlice();
 }
 
 void MainWindow::on_actionYZ_Slice_triggered()
 {
     m_Plane = YZPLANE;
+    UpdateSlice();
 }
 
 void MainWindow::on_actionXZ_Slice_triggered()
 {
     m_Plane = XZPLANE;
+    UpdateSlice();
 }
 
 void MainWindow::UpdateSlice()
@@ -297,6 +300,6 @@ void MainWindow::UpdateSlice()
         break;
     }
     m_BMPSlice = m_CurrentSlice;
-    QImage  qISlice(Bmp,m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    QImage  qISlice(Bmp,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
     child->showSlice(qISlice);
 }
