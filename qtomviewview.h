@@ -4,7 +4,7 @@
 #include <QtWidgets>
 #include "mainwindow.h"
 #include <QtCore>
-#include <QtWidgets>
+//#include <QtWidgets>
 
 class QTomViewView : public QMainWindow
 {
