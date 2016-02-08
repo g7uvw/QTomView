@@ -59,6 +59,8 @@ protected:
     void StartMessage(void);
     void CreateDefaultLookup(void);
     void UpdateSlice(void);
+    void CreateBitmap();
+    unsigned char *** GetIm();
     QString m_FilePath;
     QString m_FileName;
 
@@ -71,7 +73,7 @@ public:
     int m_MaxZ;
     unsigned int m_CurrentSlice;
     unsigned int m_Plane;
-    unsigned int m_XSlice, m_YSlice, m_ZSlice, m_BMPSlice, m_BMPPlane;
+    unsigned int m_XSlice, m_YSlice, m_ZSlice, m_BMPSlice, m_BMPPlane,m_BitmapBufferSize;
     bool m_CropTags;
     void Texit(QString Message);
     void Alert(QString Message, QString Title);

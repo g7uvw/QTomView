@@ -111,8 +111,8 @@
    <addaction name="actionUpSlice"/>
    <addaction name="actionDown_Slice"/>
    <addaction name="actionXY_Slice"/>
-   <addaction name="actionYZ_Slice"/>
    <addaction name="actionXZ_Slice"/>
+   <addaction name="actionYZ_Slice"/>
    <addaction name="separator"/>
    <addaction name="actionInformation"/>
   </widget>

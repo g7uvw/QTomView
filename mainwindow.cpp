@@ -176,8 +176,10 @@ void MainWindow::on_actionOpen_triggered()
             for (z=0; z<m_Header.zsize; ++z)
                 TOMFILE.read((char*)m_ImBuffer[z], Area);
 
-    //tomData = TOMFILE.readAll();
+
     TOMFILE.close();
+
+    m_Plane = XYPLANE;
     CreateDefaultLookup();
     unsigned int centralslice = m_CurrentSlice = m_ZSlice = (m_Header.num_slices / 2);
     QImage  CentralXYSlice(m_ImBuffer[centralslice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
@@ -188,7 +190,10 @@ void MainWindow::on_actionOpen_triggered()
     child->setWindowTitle(QFileInfo(m_FileName).fileName());
 }
 
-
+unsigned char *** MainWindow::GetIm()
+{
+    return m_Im;
+}
 
 void MainWindow::on_actionExit_triggered()
 {
@@ -246,35 +251,62 @@ void MainWindow::on_actionUpSlice_triggered()
 void MainWindow::on_actionXY_Slice_triggered()
 {
     m_Plane = XYPLANE;
+    CreateBitmap();
     UpdateSlice();
 }
 
 void MainWindow::on_actionYZ_Slice_triggered()
 {
     m_Plane = YZPLANE;
+    CreateBitmap();
     UpdateSlice();
 }
 
 void MainWindow::on_actionXZ_Slice_triggered()
 {
     m_Plane = XZPLANE;
+    CreateBitmap();
     UpdateSlice();
+}
+
+void MainWindow::CreateBitmap()
+{
+    unsigned int m_YSize,m_XSize,m_ZSize;
+    m_YSize = m_Header.ysize;
+    m_XSize = m_Header.xsize;
+    m_ZSize = m_Header.zsize;
+
+    int XRoundupSize;
+        if (m_XSize % 4)
+            XRoundupSize = m_XSize + 4 - (m_XSize % 4);
+        else
+            XRoundupSize = m_XSize;
+        if (m_BitmapArray != NULL)
+            delete [] m_BitmapArray;
+        if (m_BitmapBuffer != NULL)
+            delete [] m_BitmapBuffer;
+        m_BitmapBuffer = new unsigned char [m_YSize*XRoundupSize];
+        m_BitmapArray = new unsigned char * [m_YSize];
+        m_BitmapBufferSize = m_YSize*XRoundupSize;
+        for (unsigned int a=0; a<m_YSize; ++a)
+            m_BitmapArray[a] = &m_BitmapBuffer[a*XRoundupSize];
 }
 
 void MainWindow::UpdateSlice()
 {
     unsigned int x,y;
-    unsigned char *Pix, **Slice, *Bmp; //***VIm
+    unsigned char ***VIm, *Pix, **Slice, *Bmp;
     unsigned int m_YSize,m_XSize,m_ZSize;
     m_YSize = m_Header.ysize;
     m_XSize = m_Header.xsize;
     m_ZSize = m_Header.zsize;
+    VIm = GetIm();
     switch(m_Plane)
     {
     case XYPLANE:
         for (y=0; y<m_YSize; ++y)
         {
-            Pix = m_Im[m_ZSlice][y];
+            Pix = VIm[m_ZSlice][y];
             Bmp = m_BitmapArray[y];
             for (x=0; x<m_XSize; ++x)
                 *Bmp++ = Pix[x];
@@ -284,7 +316,7 @@ void MainWindow::UpdateSlice()
         for (y=0; y<m_YSize; ++y)
         {
             Bmp = m_BitmapArray[y];
-            Pix = m_Im[y][m_YSlice];
+            Pix = VIm[y][m_YSlice];
             for (x=0; x<m_XSize; ++x)
                 *Bmp++ = Pix[x];
         }
@@ -293,7 +325,7 @@ void MainWindow::UpdateSlice()
         for (y=0; y<m_YSize; ++y)
         {
             Bmp = m_BitmapArray[y];
-            Slice = m_Im[y];
+            Slice = VIm[y];
             for (x=0; x<m_XSize; ++x)
                 *Bmp++ = Slice[x][m_XSlice];
         }
