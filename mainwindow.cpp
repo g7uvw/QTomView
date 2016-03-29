@@ -22,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
   , m_MaxY(0)
   , m_MinZ(0)
   , m_MaxZ(0)
+  , m_Im(NULL)
+  , m_ImBuffer(NULL)
+  , m_ImRow(NULL)
   , m_CurrentSlice(0)
   , m_CropTags(false)
 {
