@@ -1,0 +1,9 @@
+Given a total of Z slices of size X*Y, the data file is loaded into memory as:
+
+Z arrays of size X*Y, this is m_ImBuffer[z]
+
+
+
+m_ImRow is
+
+m_Im is

@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = QTomView
 TEMPLATE = app
-QMAKE_MAC_SDK = macosx10.11
+//QMAKE_MAC_SDK = macosx10.11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -28,3 +28,6 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     qtomviewresources.qrc
+
+OTHER_FILES += \
+    Memory_Layout.txt

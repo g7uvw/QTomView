@@ -68,10 +68,11 @@ MainWindow::~MainWindow()
 void MainWindow::AllocateMemory()
 {
     int a,b;
-//	long Volume = (long)m_Header.xsize*m_Header.ysize*m_Header.zsize;
+    long Volume = (long)m_Header.xsize*m_Header.ysize*m_Header.zsize;
     long yzArea = (long)m_Header.ysize*m_Header.zsize;
     long xyArea = (long)m_Header.xsize*m_Header.ysize;
 
+    // buffers already exist - lose them.
     if (m_Im)
     {
         delete m_Im;
@@ -80,24 +81,35 @@ void MainWindow::AllocateMemory()
             delete m_ImBuffer[a];
         delete m_ImBuffer;
     }
+
+    // do we have any enough memory to load a slice?
     if ((m_ImBuffer = new unsigned char*[m_Header.zsize]) == NULL)
         Texit("Insufficient Memory");
+
+    // make an array of XY arrays, or else fail if we don't have the memory.
     for (a=0; a<m_Header.zsize; ++a)
-    {
-        if ((m_ImBuffer[a] = new unsigned char[xyArea]) == NULL)
+        {
+            if ((m_ImBuffer[a] = new unsigned char[xyArea]) == NULL)
             Texit("Insufficient Memory");
-    }
+        }
+
+    // do we have space for a YZ Slice?
     if ((m_ImRow = new unsigned char*[yzArea]) == NULL)
         Texit("Insufficient Memory");
+
+    // do we have space for an array of arrays?
     if ((m_Im = new unsigned char**[m_Header.zsize]) == NULL)
         Texit("Insufficient Memory");
 
-    for (a=0; a< m_Header.zsize; ++a)
-    {
-        for (b=0; b<m_Header.ysize; ++b)
-            m_ImRow[a*m_Header.ysize+b] = &(m_ImBuffer[a][b*m_Header.xsize]);
-        m_Im[a] = &m_ImRow[a*m_Header.ysize];
-    }
+    for (a = 0; a < m_Header.zsize; ++a)
+        {
+            for (b = 0; b < m_Header.ysize; ++b)
+                {
+                    m_ImRow[a*m_Header.ysize + b] = &(m_ImBuffer[a][b * m_Header.xsize]);
+                }
+
+            m_Im[a] = &m_ImRow[a * m_Header.ysize];
+        }
 }
 
 void MainWindow::StartMessage()
@@ -178,9 +190,11 @@ void MainWindow::on_actionOpen_triggered()
     Area = m_Header.xsize*m_Header.ysize;
             for (z=0; z<m_Header.zsize; ++z)
                 TOMFILE.read((char*)m_ImBuffer[z], Area);
-
-
     TOMFILE.close();
+
+    m_YSize = m_YDim = m_Header.ysize;
+    m_XSize = m_XDim = m_Header.xsize;
+    m_ZSize = m_ZDim = m_Header.zsize;
 
     m_Plane = XYPLANE;
     CreateDefaultLookup();
@@ -254,6 +268,7 @@ void MainWindow::on_actionUpSlice_triggered()
 void MainWindow::on_actionXY_Slice_triggered()
 {
     m_Plane = XYPLANE;
+    Resize();
     CreateBitmap();
     UpdateSlice();
 }
@@ -261,6 +276,7 @@ void MainWindow::on_actionXY_Slice_triggered()
 void MainWindow::on_actionYZ_Slice_triggered()
 {
     m_Plane = YZPLANE;
+    Resize();
     CreateBitmap();
     UpdateSlice();
 }
@@ -268,16 +284,36 @@ void MainWindow::on_actionYZ_Slice_triggered()
 void MainWindow::on_actionXZ_Slice_triggered()
 {
     m_Plane = XZPLANE;
+    Resize();
     CreateBitmap();
     UpdateSlice();
 }
 
+void MainWindow::Resize()
+{
+    switch (m_Plane)
+    {
+    case XYPLANE:
+        m_XSize = m_XDim;
+        m_YSize = m_YDim;
+        break;
+    case XZPLANE:
+        m_XSize = m_XDim;
+        m_YSize = m_ZDim;
+        break;
+    case YZPLANE:
+        m_XSize = m_YDim;
+        m_YSize = m_ZDim;
+        break;
+    }
+}
+
 void MainWindow::CreateBitmap()
 {
-    unsigned int m_YSize,m_XSize,m_ZSize;
-    m_YSize = m_Header.ysize;
-    m_XSize = m_Header.xsize;
-    m_ZSize = m_Header.zsize;
+
+    //m_YSize = m_Header.ysize;
+    //m_XSize = m_Header.xsize;
+    //m_ZSize = m_Header.zsize;
 
     int XRoundupSize;
         if (m_XSize % 4)
@@ -299,10 +335,8 @@ void MainWindow::UpdateSlice()
 {
     unsigned int x,y;
     unsigned char ***VIm, *Pix, **Slice, *Bmp;
-    unsigned int m_YSize,m_XSize,m_ZSize;
-    m_YSize = m_Header.ysize;
-    m_XSize = m_Header.xsize;
-    m_ZSize = m_Header.zsize;
+    //unsigned int m_YSize,m_XSize,m_ZSize;
+
     VIm = GetIm();
     switch(m_Plane)
     {
@@ -335,6 +369,6 @@ void MainWindow::UpdateSlice()
         break;
     }
     m_BMPSlice = m_CurrentSlice;
-    QImage  qISlice(Bmp,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
+    QImage  qISlice(m_BitmapBuffer,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
     child->showSlice(qISlice);
 }
