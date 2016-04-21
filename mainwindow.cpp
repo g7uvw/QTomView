@@ -53,14 +53,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     int a;
-        if (m_Im)
-        {
-            delete m_Im;
-            delete m_ImRow;
-            for (a=0; a<m_Header.zsize; ++a)
-                delete m_ImBuffer[a];
-            delete m_ImBuffer;
-        }
+    if (m_Im)
+    {
+        delete m_Im;
+        delete m_ImRow;
+        for (a=0; a<m_Header.zsize; ++a)
+            delete m_ImBuffer[a];
+        delete m_ImBuffer;
+    }
     delete ui;
 }
 
@@ -88,10 +88,10 @@ void MainWindow::AllocateMemory()
 
     // make an array of XY arrays, or else fail if we don't have the memory.
     for (a=0; a<m_Header.zsize; ++a)
-        {
-            if ((m_ImBuffer[a] = new unsigned char[xyArea]) == NULL)
+    {
+        if ((m_ImBuffer[a] = new unsigned char[xyArea]) == NULL)
             Texit("Insufficient Memory");
-        }
+    }
 
     // do we have space for a YZ Slice?
     if ((m_ImRow = new unsigned char*[yzArea]) == NULL)
@@ -102,14 +102,14 @@ void MainWindow::AllocateMemory()
         Texit("Insufficient Memory");
 
     for (a = 0; a < m_Header.zsize; ++a)
+    {
+        for (b = 0; b < m_Header.ysize; ++b)
         {
-            for (b = 0; b < m_Header.ysize; ++b)
-                {
-                    m_ImRow[a*m_Header.ysize + b] = &(m_ImBuffer[a][b * m_Header.xsize]);
-                }
-
-            m_Im[a] = &m_ImRow[a * m_Header.ysize];
+            m_ImRow[a*m_Header.ysize + b] = &(m_ImBuffer[a][b * m_Header.xsize]);
         }
+
+        m_Im[a] = &m_ImRow[a * m_Header.ysize];
+    }
 }
 
 void MainWindow::StartMessage()
@@ -188,23 +188,28 @@ void MainWindow::on_actionOpen_triggered()
 
     AllocateMemory();
     Area = m_Header.xsize*m_Header.ysize;
-            for (z=0; z<m_Header.zsize; ++z)
-                TOMFILE.read((char*)m_ImBuffer[z], Area);
+    for (z=0; z<m_Header.zsize; ++z)
+        TOMFILE.read((char*)m_ImBuffer[z], Area);
     TOMFILE.close();
 
     m_YSize = m_YDim = m_Header.ysize;
     m_XSize = m_XDim = m_Header.xsize;
     m_ZSize = m_ZDim = m_Header.zsize;
 
+    child->setWindowTitle(QFileInfo(m_FileName).fileName());
     m_Plane = XYPLANE;
     CreateDefaultLookup();
     unsigned int centralslice = m_CurrentSlice = m_ZSlice = (m_Header.num_slices / 2);
-    QImage  CentralXYSlice(m_ImBuffer[centralslice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    Resize();
+    CreateBitmap();
+    UpdateSlice();
 
-    CentralXYSlice.setColorTable(colorTable);
-    child->resize(m_Header.xsize,m_Header.ysize);
-    child->showSlice(CentralXYSlice);
-    child->setWindowTitle(QFileInfo(m_FileName).fileName());
+    //QImage  CentralXYSlice(m_ImBuffer[centralslice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+
+
+    //child->resize(m_Header.xsize,m_Header.ysize);
+    //child->showSlice(CentralXYSlice);
+
 }
 
 unsigned char *** MainWindow::GetIm()
@@ -246,23 +251,66 @@ void MainWindow::on_action300_triggered()
 
 void MainWindow::on_actionDown_Slice_triggered()
 {
-    if (m_CurrentSlice == 1)
-        m_CurrentSlice = 0;
-    else
-        m_CurrentSlice--;
-    QImage  Slice(m_ImBuffer[m_CurrentSlice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    switch (m_Plane)
+    {
 
-    child->showSlice(Slice);
+    case XYPLANE:
+        if (m_ZSlice == 0)
+            return;
+        m_ZSlice--;
+        break;
+    case XZPLANE:
+        if (m_YSlice == 0)
+            return;
+        m_YSlice--;
+        break;
+    case YZPLANE:
+        if(m_XSlice == 0)
+            return;
+        m_XSlice--;
+        break;
+    }
+
+    m_CurrentSlice--;
+
+    Resize();
+    CreateBitmap();
+    UpdateSlice();
+    //QImage  Slice(m_ImBuffer[m_CurrentSlice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+
+    //child->showSlice(Slice);
 }
 
 void MainWindow::on_actionUpSlice_triggered()
 {
-    if(m_CurrentSlice == m_Header.num_slices - 1)
-        m_CurrentSlice = m_Header.num_slices;
-    else
-        m_CurrentSlice++;
-    QImage  Slice(m_ImBuffer[m_CurrentSlice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
-    child->showSlice(Slice);
+    switch (m_Plane)
+    {
+
+    case XYPLANE:
+        if (m_ZSlice == m_Header.zsize - 1)
+            return;
+        m_ZSlice++;
+        break;
+    case XZPLANE:
+        if (m_YSlice == m_Header.ysize - 1)
+            return;
+        m_YSlice++;
+        break;
+    case YZPLANE:
+        if (m_XSlice == m_Header.xsize - 1)
+            return;
+        m_XSlice++;
+        break;
+    }
+
+    m_CurrentSlice++;
+
+    Resize();
+    CreateBitmap();
+    UpdateSlice();
+
+    //QImage  Slice(m_ImBuffer[m_CurrentSlice],m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+    //child->showSlice(Slice);
 }
 
 void MainWindow::on_actionXY_Slice_triggered()
@@ -306,37 +354,32 @@ void MainWindow::Resize()
         m_YSize = m_ZDim;
         break;
     }
+    child->resize(m_XSize,m_YSize);
 }
 
 void MainWindow::CreateBitmap()
 {
 
-    //m_YSize = m_Header.ysize;
-    //m_XSize = m_Header.xsize;
-    //m_ZSize = m_Header.zsize;
-
     int XRoundupSize;
-        if (m_XSize % 4)
-            XRoundupSize = m_XSize + 4 - (m_XSize % 4);
-        else
-            XRoundupSize = m_XSize;
-        if (m_BitmapArray != NULL)
-            delete [] m_BitmapArray;
-        if (m_BitmapBuffer != NULL)
-            delete [] m_BitmapBuffer;
-        m_BitmapBuffer = new unsigned char [m_YSize*XRoundupSize];
-        m_BitmapArray = new unsigned char * [m_YSize];
-        m_BitmapBufferSize = m_YSize*XRoundupSize;
-        for (unsigned int a=0; a<m_YSize; ++a)
-            m_BitmapArray[a] = &m_BitmapBuffer[a*XRoundupSize];
+    if (m_XSize % 4)
+        XRoundupSize = m_XSize + 4 - (m_XSize % 4);
+    else
+        XRoundupSize = m_XSize;
+    if (m_BitmapArray != NULL)
+        delete [] m_BitmapArray;
+    if (m_BitmapBuffer != NULL)
+        delete [] m_BitmapBuffer;
+    m_BitmapBuffer = new unsigned char [m_YSize*XRoundupSize];
+    m_BitmapArray = new unsigned char * [m_YSize];
+    m_BitmapBufferSize = m_YSize*XRoundupSize;
+    for (unsigned int a=0; a<m_YSize; ++a)
+        m_BitmapArray[a] = &m_BitmapBuffer[a*XRoundupSize];
 }
 
 void MainWindow::UpdateSlice()
 {
     unsigned int x,y;
     unsigned char ***VIm, *Pix, **Slice, *Bmp;
-    //unsigned int m_YSize,m_XSize,m_ZSize;
-
     VIm = GetIm();
     switch(m_Plane)
     {
@@ -370,5 +413,6 @@ void MainWindow::UpdateSlice()
     }
     m_BMPSlice = m_CurrentSlice;
     QImage  qISlice(m_BitmapBuffer,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
+    qISlice.setColorTable(colorTable);
     child->showSlice(qISlice);
 }
