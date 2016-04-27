@@ -414,7 +414,9 @@ void MainWindow::UpdateSlice()
     m_BMPSlice = m_CurrentSlice;
     QImage  qISlice(m_BitmapBuffer,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
     qISlice.setColorTable(colorTable);
-    bool b = qISlice.save("/Users/dm/dump.xbm");
+    child->showSlice(qISlice);
+    qISlice.convertToFormat(QImage::Format_RGB16);
+    bool b = qISlice.save("/Users/dm/dump.png","PNG");
     Q_ASSERT(b);
     child->showSlice(qISlice);
 }
