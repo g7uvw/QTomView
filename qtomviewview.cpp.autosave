@@ -7,8 +7,6 @@ QTomViewView::QTomViewView()
     setWindowTitle("New");
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
-
-
     view = new QGraphicsView;
     view->setMouseTracking(true);
     scene = new QGraphicsScene(0, 0, this->x(), this->y(), this);
@@ -58,4 +56,27 @@ void QTomViewView::zoom(int zoomlevelpercent)
 {
     view->scale(view->x()*zoomlevelpercent,view->y()*zoomlevelpercent);
     view->update();
+}
+
+void QTomViewView::mousePressEvent(QMouseEvent *event)
+
+{
+//    if (event->button() == Qt::LeftButton) {
+//        lastPoint = event->pos();
+//        scribbling = true;
+//    }
+}
+
+void QTomViewView::mouseMoveEvent(QMouseEvent *event)
+{
+    if ((event->buttons() & Qt::LeftButton) && scribbling)
+        drawLineTo(event->pos());
+}
+
+void QTomViewView::mouseReleaseEvent(QMouseEvent *event)
+{
+//    if (event->button() == Qt::LeftButton && scribbling) {
+//        drawLineTo(event->pos());
+//        scribbling = false;
+//    }
 }

@@ -283,7 +283,6 @@ void MainWindow::on_actionDown_Slice_triggered()
     }
 
     m_CurrentSlice--;
-
     Resize();
     CreateBitmap();
     UpdateSlice();
@@ -296,7 +295,6 @@ void MainWindow::on_actionUpSlice_triggered()
 {
     switch (m_Plane)
     {
-
     case XYPLANE:
         if (m_ZSlice == m_Header.zsize - 1)
             return;

@@ -33,6 +33,14 @@ private:
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
     QTomViewView *child;
+    QStatusBar *statusbar;
+    QLabel *XYZpos;
+    QLabel *PosLAC;
+    QLabel *OriginDistance;
+    QLabel *AngularOriginDistance;
+    QLabel *AverageLAC;
+    QLabel *Message;
+
     unsigned char*** m_Im;
     unsigned char** m_ImBuffer;
     unsigned char** m_ImRow;

@@ -18,7 +18,9 @@ public:
     void wipe();
     void showSlice(QImage &slice);
     void zoom(int zoomlevelpercent);
-
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 protected:
 
 
