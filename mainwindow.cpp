@@ -52,13 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->statusBar->addPermanentWidget(Message);
     Message->setText("Ready");
 
-    //MDI stuff
-    mdiArea = new QMdiArea;
-    mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    setCentralWidget(mdiArea);
-    child = createMdiChild();
-    child->showNormal();
+    TomViewArea - new QTomViewView;
+    setCentralWidget(TomViewArea);
 
 
 }
@@ -149,12 +144,7 @@ void MainWindow::StartMessage()
 }
 
 
-QTomViewView *MainWindow::createMdiChild()
-{
-    QTomViewView *child = new QTomViewView;
-    mdiArea->addSubWindow(child);
-    return child;
-}
+
 
 
 
@@ -212,7 +202,7 @@ void MainWindow::on_actionOpen_triggered()
     m_XSize = m_XDim = m_Header.xsize;
     m_ZSize = m_ZDim = m_Header.zsize;
 
-    child->setWindowTitle(QFileInfo(m_FileName).fileName());
+    //child->setWindowTitle(QFileInfo(m_FileName).fileName());
     m_Plane = XYPLANE;
     CreateDefaultLookup();
     unsigned int centralslice = m_CurrentSlice = m_ZSlice = (m_Header.num_slices / 2);
@@ -283,7 +273,6 @@ void MainWindow::on_actionDown_Slice_triggered()
     }
 
     m_CurrentSlice--;
-
     Resize();
     CreateBitmap();
     UpdateSlice();
@@ -296,7 +285,6 @@ void MainWindow::on_actionUpSlice_triggered()
 {
     switch (m_Plane)
     {
-
     case XYPLANE:
         if (m_ZSlice == m_Header.zsize - 1)
             return;
@@ -366,7 +354,7 @@ void MainWindow::Resize()
         m_YSize = m_ZDim;
         break;
     }
-    child->adjustSize();
+    //child->adjustSize();
     //child->resize(m_XSize,m_YSize);
 }
 
@@ -425,13 +413,17 @@ void MainWindow::UpdateSlice()
         break;
     }
     m_BMPSlice = m_CurrentSlice;
-    QImage  qISlice(m_BitmapBuffer,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
-    qISlice.setColorTable(colorTable);
-    QImage display = qISlice.convertToFormat(QImage::Format_RGB16);
-    child->adjustSize();
-    child->showSlice(display);
-    bool b = qISlice.save("/Users/dm/dump.png","PNG");
 
-    Q_ASSERT(b);
+    //QImage  qISlice(m_BitmapBuffer,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
+    QImage slice(m_BitmapBuffer,m_XSize,m_YSize,m_XSize,QImage::Format_Indexed8);
+    slice.setColorTable(colorTable);
+    TomViewArea->showSlice(slice);
+//    QImage display = qISlice.convertToFormat(QImage::Format_RGB16);
+    //child->adjustSize();
+    //child->showSlice(display);
+//    TomViewArea->update();
+//    bool b = qISlice.save("/Users/dm/dump.png","PNG");
+
+    //Q_ASSERT(b);
 
 }

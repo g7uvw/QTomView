@@ -6,13 +6,10 @@
 #include "qtomviewview.h"
 
 class QTomViewView;
-QT_BEGIN_NAMESPACE
 class QAction;
 class QMenu;
-class QMdiArea;
-class QMdiSubWindow;
 class QSignalMapper;
-QT_END_NAMESPACE
+
 
 
 namespace Ui {
@@ -30,7 +27,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QMdiArea *mdiArea;
+    QTomViewView *TomViewArea;
     QSignalMapper *windowMapper;
     QTomViewView *child;
     QStatusBar *statusbar;
@@ -59,6 +56,7 @@ public:
     QString time,duration,owner,user,specimen,scan,comment;
     QByteArray tomData;
     QVector<QRgb> colorTable;
+    QImage slice;
 
 
 
@@ -90,7 +88,6 @@ public:
     void Alert(QString Message, QString Title);
 
 private slots:
-    QTomViewView *createMdiChild();
     void on_actionInformation_triggered();
     void on_actionOpen_triggered();
     void on_actionExit_triggered();

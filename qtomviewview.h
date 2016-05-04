@@ -2,36 +2,41 @@
 #define QTOMVIEWVIEW_H
 #include <QPainter>
 #include <QtWidgets>
-#include "mainwindow.h"
 #include <QtCore>
-//#include <QtWidgets>
+#include <QWidget>
 
-class QTomViewView : public QMainWindow
+class QTomViewView : public QWidget
 {
     Q_OBJECT
 public:
-    QTomViewView();
+    QTomViewView(QWidget *parent = 0);
+
     bool loadFile(const QString &fileName);
-    QString userFriendlyCurrentFile();
-    QString currentFile() { return curFile; }
-    static QImage slice;
-    void wipe();
     void showSlice(QImage &slice);
     void zoom(int zoomlevelpercent);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-protected:
 
+
+
+public slots:
+    void wipe();
+    void dumpBMPs();
+
+
+protected:
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    void setCurrentFile(const QString &fileName);
-    QString strippedName(const QString &fullFileName);
-    QGraphicsView *view;
-    QGraphicsScene *scene;
+    QImage displayedslice;
+    //void setCurrentFile(const QString &fileName);
 
-    QString curFile;
-    bool isUntitled;
+    //QGraphicsView *view;
+    //QGraphicsScene *scene;
+
+    //QString curFile;
+    //bool isUntitled;
 
 };
 
