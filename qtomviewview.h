@@ -12,7 +12,7 @@ public:
     QTomViewView(QWidget *parent = 0);
 
     bool loadFile(const QString &fileName);
-    void showSlice(QImage &slice);
+    void showSlice(const QImage slice);
     void zoom(int zoomlevelpercent);
 
 

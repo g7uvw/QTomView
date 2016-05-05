@@ -1,6 +1,6 @@
 #include <QtWidgets>
 #include "qtomviewview.h"
-
+#include "mainwindow.h"
 QTomViewView::QTomViewView(QWidget *parent)
     : QWidget(parent)
 {
@@ -33,7 +33,7 @@ void QTomViewView::wipe()
     update();
 }
 
-void QTomViewView::showSlice(QImage &slice)
+void QTomViewView::showSlice(const QImage slice)
 {
     displayedslice = slice;
     update();
