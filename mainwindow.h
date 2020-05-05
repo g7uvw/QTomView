@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "TomHeader.h"
 #include "qtomviewview.h"
+#include "tomslicer.h"
 
 class QTomViewView;
 QT_BEGIN_NAMESPACE
@@ -33,11 +34,6 @@ private:
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
     QTomViewView *child;
-    unsigned char*** m_Im;
-    unsigned char** m_ImBuffer;
-    unsigned char** m_ImRow;
-    unsigned char** m_BitmapArray;
-    unsigned char* m_BitmapBuffer;
 
 public:
 
@@ -51,7 +47,8 @@ public:
     QString time,duration,owner,user,specimen,scan,comment;
     QByteArray tomData;
     QVector<QRgb> colorTable;
-
+    TOMSlicer* slicer;
+    std::vector<uint8_t> volume;
 
 
 protected:
@@ -83,16 +80,17 @@ private slots:
     void on_actionInformation_triggered();
     void on_actionOpen_triggered();
     void on_actionExit_triggered();
-    void on_action25_triggered();
-    void on_action50_triggered();
-    void on_action100_triggered();
-    void on_action200_triggered();
-    void on_action300_triggered();
     void on_actionDown_Slice_triggered();
     void on_actionUpSlice_triggered();
     void on_actionXY_Slice_triggered();
     void on_actionYZ_Slice_triggered();
     void on_actionXZ_Slice_triggered();
+
+    void on_action25_triggered();
+    void on_action50_triggered();
+    void on_action100_triggered();
+    void on_action200_triggered();
+    void on_action300_triggered();
 };
 
 #endif // MAINWINDOW_H
