@@ -22,11 +22,11 @@ private:
     
 public:
     static TOMSlicer* getInstance();    // public accessor for the singleton
-    thead header;
+    //thead header;
     std::vector<uint8_t> Slice;
-    const std::vector<uint8_t>& XYSlice(const std::vector<uint8_t>& vol, size_t x, size_t y, size_t z);
-    const std::vector<uint8_t>& XZSlice(const std::vector<uint8_t>& vol, size_t x, size_t Yoffset, size_t z);
-    const std::vector<uint8_t>& YZSlice(const std::vector<uint8_t>& vol, size_t x, size_t y, size_t z);
+    const std::vector<uint8_t>& XYSlice(const std::vector<uint8_t>& vol, size_t x, size_t y, size_t Zoffset);
+    const std::vector<uint8_t>& XZSlice(const std::vector<uint8_t>& vol, size_t x, size_t ysize, size_t Yoffset, size_t z);
+    const std::vector<uint8_t>& YZSlice(const std::vector<uint8_t>& vol, size_t Xoffset, size_t xsize, size_t y, size_t z);
 
 };
 

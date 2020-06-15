@@ -14,7 +14,7 @@ public:
     bool loadFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
-    static QImage slice;
+    //static QImage slice;
     void wipe();
     void showSlice(QImage &slice);
     void zoom(int zoomlevelpercent);

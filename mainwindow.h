@@ -68,9 +68,9 @@ public:
     int m_MaxY;
     int m_MinZ;
     int m_MaxZ;
-    unsigned int m_CurrentSlice;
+    unsigned int m_CurrentSlice, m_XSlice, m_YSlice, m_ZSlice;
     unsigned int m_Plane;
-    unsigned int m_XSlice, m_YSlice, m_ZSlice, m_BMPSlice, m_BMPPlane,m_BitmapBufferSize;
+    //unsigned int m_XSlice, m_YSlice, m_ZSlice, m_BMPSlice, m_BMPPlane,m_BitmapBufferSize;
     bool m_CropTags;
     void Texit(QString Message);
     void Alert(QString Message, QString Title);
