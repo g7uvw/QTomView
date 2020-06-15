@@ -83,7 +83,7 @@ void MainWindow::on_actionOpen_triggered()
     child->setWindowTitle(QFileInfo(m_FileName).fileName());
     m_Plane = XYPLANE;
     m_CurrentSlice = m_Header.zsize/2;
-    m_XSlice = m_CurrentSlice;
+    m_XSlice = m_Header.xsize / 2;
     m_YSlice = m_Header.ysize / 2;
     m_ZSlice = m_Header.zsize / 2;
     UpdateSlice();
