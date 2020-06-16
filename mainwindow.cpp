@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "infodialog.h"
-#include "qtomviewview.h"
-#include "TomView.h"
+#include "qtomv_view.h"
+//#include "TomView.h"
 
 #include <QMessageBox>
 #include <QFile>
@@ -31,23 +31,16 @@ MainWindow::MainWindow(QWidget *parent) :
   , m_CropTags(false)
 {
     ui->setupUi(this);
-    // m_Empty = true;
-    //m_Header.xsize = 0;
-    // m_New = false;
-    // m_XSlice = m_YSlice = m_ZSlice = m_BMPSlice = 0;
-
     m_Plane = XYPLANE;
-
     mdiArea = new QMdiArea;
     mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setCentralWidget(mdiArea);
 
-    child = createMdiChild();
-    child->autoFillBackground();
-    child->showMaximized();
-
-    slicer = TOMSlicer::getInstance();
+    view_area = createMdiChild();
+    view_area->autoFillBackground();
+    view_area->showMaximized();
+    //slicer = TOMSlicer::getInstance();
 
 }
 
@@ -69,24 +62,25 @@ void MainWindow::on_actionOpen_triggered()
     size_t volumeBytes = m_Header.xsize*m_Header.ysize *m_Header.zsize;
     std::cerr << "Trying to allocate vector with storage for  " << volumeBytes << " bytes." << std::endl;
     try {
-        volume.resize(volumeBytes);
+        view_area->volume.resize(volumeBytes);
     }
     catch (std::length_error& vecerror){
         std::cerr << vecerror.what() << std::endl;
         return;
     }
-    TOMFILE.seek(0);                // seek to start so we're inn a known place
+    TOMFILE.seek(0);                // seek to start so we're in a known place
     TOMFILE.seek(sizeof(m_Header));  // seek to end of header
-    TOMFILE.read((char*) &volume[0],volumeBytes);
+    TOMFILE.read((char*) &view_area->volume[0],volumeBytes);
     TOMFILE.close();
 
-    child->setWindowTitle(QFileInfo(m_FileName).fileName());
+    view_area->ReceiveHeader(m_Header);
+    view_area->setWindowTitle(QFileInfo(m_FileName).fileName());
     m_Plane = XYPLANE;
     m_CurrentSlice = m_Header.zsize/2;
     m_XSlice = m_Header.xsize / 2;
     m_YSlice = m_Header.ysize / 2;
     m_ZSlice = m_Header.zsize / 2;
-    UpdateSlice();
+    view_area->UpdateSlice(m_Plane);
 
 }
 
@@ -117,7 +111,7 @@ void MainWindow::on_actionDown_Slice_triggered()
     if (m_CurrentSlice == 0)
         m_CurrentSlice = 0;
 
-    UpdateSlice();
+    view_area->UpdateSlice(m_Plane);
 
 }
 
@@ -143,95 +137,73 @@ void MainWindow::on_actionUpSlice_triggered()
         }
         ++m_CurrentSlice;
 
-    UpdateSlice();
+    view_area->UpdateSlice(m_Plane);
 }
 
 
-void MainWindow::UpdateSlice()
-{
-    CreateDefaultLookup();
-    switch (m_Plane)
-    {
-    case YZPLANE:{
-//      const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, size_t Xoffset, size_t xsize, size_t ysize, size_t zsize)
-        const std::vector<uint8_t>&YZ = slicer->YZSlice(volume, m_XSlice, m_Header.xsize, m_Header.ysize, m_Header.zsize);
+//void MainWindow::UpdateSlice()
+//{
+//    CreateDefaultLookup();
+//    switch (m_Plane)
+//    {
+//    case YZPLANE:{
+////      const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, size_t Xoffset, size_t xsize, size_t ysize, size_t zsize)
+//        const std::vector<uint8_t>&YZ = slicer->YZSlice(volume, m_XSlice, m_Header.xsize, m_Header.ysize, m_Header.zsize);
+//        QImage  YZSlice(YZ.data(),m_Header.ysize,m_Header.zsize,m_Header.ysize,QImage::Format_Indexed8);
+//        YZSlice.setColorTable(colorTable);
 
-        QImage  YZSlice(YZ.data(),m_Header.ysize,m_Header.zsize,m_Header.ysize,QImage::Format_Indexed8);
-        YZSlice.setColorTable(colorTable);
+//        view_area->resize(YZSlice.width(),YZSlice.height());
+//        view_area->wipe();
+//        view_area->showSlice(YZSlice);
+//        break;}
 
-        //
-//        QString imagePath(QStringLiteral("/Users/dm/Dropbox/TomFiles/YZPLANE.PNG"));
-//        QImageWriter writer(imagePath);
-//        writer.setFormat("png");
-//        writer.write(YZSlice);
-        //
+//    case XZPLANE:{
+//      //const std::vector<uint8_t>& TOMSlicer::XZSlice(const std::vector<uint8_t>& vol, size_t xsize, size_t ysize, size_t Yoffset, size_t zsize)
+//        const std::vector<uint8_t>&XZ = slicer->XZSlice(volume, m_Header.xsize, m_Header.ysize, m_YSlice, m_Header.zsize);
+//        QImage  XZSlice(XZ.data(),m_Header.xsize,m_Header.zsize,m_Header.xsize,QImage::Format_Indexed8);
+//        XZSlice.setColorTable(colorTable);
 
-        child->resize(YZSlice.width(),YZSlice.height());
-        child->wipe();
-        child->showSlice(YZSlice);
-        break;}
+//        view_area->resize(XZSlice.width(),XZSlice.height());
+//        view_area->showSlice(XZSlice);
+//        break;}
 
-    case XZPLANE:{
-      //const std::vector<uint8_t>& TOMSlicer::XZSlice(const std::vector<uint8_t>& vol, size_t xsize, size_t ysize, size_t Yoffset, size_t zsize)
-        const std::vector<uint8_t>&XZ = slicer->XZSlice(volume, m_Header.xsize, m_Header.ysize, m_YSlice, m_Header.zsize);
-        QImage  XZSlice(XZ.data(),m_Header.xsize,m_Header.zsize,m_Header.xsize,QImage::Format_Indexed8);
-        XZSlice.setColorTable(colorTable);
+//    default:
+//    case XYPLANE:{
+//        const std::vector<uint8_t>&XY = slicer->XYSlice(volume, m_Header.xsize, m_Header.ysize, m_ZSlice);
+//        QImage  XYSlice(XY.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
+//        XYSlice.setColorTable(colorTable);
 
+//        view_area->resize(XYSlice.width(),XYSlice.height());
+//        view_area->showSlice(XYSlice);
+//        break;}
+//    }
 
-//        QString imagePath(QStringLiteral("/Users/dm/Dropbox/TomFiles/XZPLANE.PNG"));
-//        QImageWriter writer(imagePath);
-//        writer.setFormat("png");
-//        writer.write(XZSlice);
-
-
-        child->resize(XZSlice.width(),XZSlice.height());
-        child->showSlice(XZSlice);
-        break;}
-
-    default:
-    case XYPLANE:{
-        const std::vector<uint8_t>&XY = slicer->XYSlice(volume, m_Header.xsize, m_Header.ysize, m_ZSlice);
-        QImage  XYSlice(XY.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
-        XYSlice.setColorTable(colorTable);
-
-        //
-//        QString imagePath(QStringLiteral("/Users/dm/Dropbox/TomFiles/XYPLANE.PNG"));
-//        QImageWriter writer(imagePath);
-//        writer.setFormat("png");
-//        writer.write(XYSlice);
-        //
-
-        child->resize(XYSlice.width(),XYSlice.height());
-        child->showSlice(XYSlice);
-        break;}
-    }
-
-}
+//}
 
 
 void MainWindow::on_actionXY_Slice_triggered()
 {
     m_Plane = XYPLANE;
-    UpdateSlice();
+    view_area->UpdateSlice(m_Plane);
 }
 
 void MainWindow::on_actionYZ_Slice_triggered()
 {
     m_Plane = YZPLANE;
-    UpdateSlice();
+    view_area->UpdateSlice(m_Plane);
 }
 
 void MainWindow::on_actionXZ_Slice_triggered()
 {
     m_Plane = XZPLANE;
-    UpdateSlice();
+    view_area->UpdateSlice(m_Plane);
 }
 
 
 
-QTomViewView *MainWindow::createMdiChild()
+QTomV_View *MainWindow::createMdiChild()
 {
-    QTomViewView *child = new QTomViewView;
+    QTomV_View *child = new QTomV_View;
     mdiArea->addSubWindow(child);
     return child;
 }
@@ -264,12 +236,12 @@ void MainWindow::on_actionInformation_triggered()
 }
 
 
-void MainWindow::CreateDefaultLookup()
-{
-    QVector<QRgb> colorTable;
-    for (int i = 0; i < 256; i++)
-        colorTable.push_back(QColor(i, i, i).rgb());
-}
+//void MainWindow::CreateDefaultLookup()
+//{
+//    QVector<QRgb> colorTable;
+//    for (int i = 0; i < 256; i++)
+//        colorTable.push_back(QColor(i, i, i).rgb());
+//}
 
 
 

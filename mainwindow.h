@@ -3,10 +3,10 @@
 
 #include <QMainWindow>
 #include "TomHeader.h"
-#include "qtomviewview.h"
+#include "qtomv_view.h"
 #include "tomslicer.h"
 
-class QTomViewView;
+class QTomV_View;
 QT_BEGIN_NAMESPACE
 class QAction;
 class QMenu;
@@ -33,7 +33,7 @@ private:
     Ui::MainWindow *ui;
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
-    QTomViewView *child;
+    QTomV_View *view_area;
 
 public:
 
@@ -45,10 +45,10 @@ public:
     float scale,voltage,current,pixel_size,exposure;
     uint32_t theta;
     QString time,duration,owner,user,specimen,scan,comment;
-    QByteArray tomData;
-    QVector<QRgb> colorTable;
-    TOMSlicer* slicer;
-    std::vector<uint8_t> volume;
+    //QByteArray tomData;
+    //QVector<QRgb> colorTable;
+    //TOMSlicer* slicer;
+    //std::vector<uint8_t> volume;
 
 
 protected:
@@ -76,7 +76,7 @@ public:
     void Alert(QString Message, QString Title);
 
 private slots:
-    QTomViewView *createMdiChild();
+    QTomV_View *createMdiChild();
     void on_actionInformation_triggered();
     void on_actionOpen_triggered();
     void on_actionExit_triggered();
