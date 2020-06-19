@@ -1,0 +1,760 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+		5E618435888B9D49F8540165 = {
+			buildActionMask = 2147483647;
+			files = (
+				);
+			isa = PBXShellScriptBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Qt Qmake";
+			shellPath = "/bin/sh";
+			shellScript = "make -C /Users/dm/Development/QTomView/ -f QTomView.xcodeproj/qt_makeqmake.mak";
+			showEnvVarsInLog = "0";
+		};
+		DD40D5F22E1128FD4F3D7EC9 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/main.cpp";
+			name = "main.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		565DDDE60603485A7F71CAFC = {
+			fileRef = "DD40D5F22E1128FD4F3D7EC9";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E5E74D6FAD52EBAD87D49FA2 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/mainwindow.cpp";
+			name = "mainwindow.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		2D3AEE2FB127FE7283596ABF = {
+			fileRef = "E5E74D6FAD52EBAD87D49FA2";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		6405CA3473E2DA60A8D3C1B7 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/infodialog.cpp";
+			name = "infodialog.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		0F63FB8830A7226761B53232 = {
+			fileRef = "6405CA3473E2DA60A8D3C1B7";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		EB1DDA631ED83F3177854741 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/qtomv_view.cpp";
+			name = "qtomv_view.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		D3AF2DC8659364CB7E25CADC = {
+			fileRef = "EB1DDA631ED83F3177854741";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		EBC6FCFB42E75964CE6EF247 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/tomslicer.cpp";
+			name = "tomslicer.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		C1F5F7CAB21BEA2DCF5DE5D0 = {
+			fileRef = "EBC6FCFB42E75964CE6EF247";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		279F46155DA41E60A9E60FCA = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/qrc_qtomviewresources.cpp";
+			name = "qrc_qtomviewresources.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		C523A4D7C682BA41200B3CAB = {
+			fileRef = "279F46155DA41E60A9E60FCA";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7701FC710570947C1D180609 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/moc_mainwindow.cpp";
+			name = "moc_mainwindow.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		48A0E210977177AC2BBA5BEC = {
+			fileRef = "7701FC710570947C1D180609";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		D8FD6BE9E1DE4D0DD10B82FD = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/moc_infodialog.cpp";
+			name = "moc_infodialog.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		435329E43EBB5CDC6DB6F0FF = {
+			fileRef = "D8FD6BE9E1DE4D0DD10B82FD";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		2D8096F4BE3E7A803A5BE11F = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/moc_qtomv_view.cpp";
+			name = "moc_qtomv_view.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		F93192B50E5BF9D57672DB1E = {
+			fileRef = "2D8096F4BE3E7A803A5BE11F";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E03AB4EE65B8E3E6EE5A4BCA = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/ui_mainwindow.h";
+			name = "ui_mainwindow.h";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.c.h";
+		};
+		53DE8476B88D29C87192F487 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/ui_infodialog.h";
+			name = "ui_infodialog.h";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.c.h";
+		};
+		F7EBF46D79719DCD46442C0F = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/mainwindow.h";
+			name = "mainwindow.h";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.c.h";
+		};
+		73C71BFF3336A9E1E2B38E99 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/TomHeader.h";
+			name = "TomHeader.h";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.c.h";
+		};
+		1B1EBC0E282ED7EF14AEF93C = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/infodialog.h";
+			name = "infodialog.h";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.c.h";
+		};
+		64A2E236C0AB66D27F03DC21 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/qtomv_view.h";
+			name = "qtomv_view.h";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.c.h";
+		};
+		B63FD1D5A7098061B9F36F07 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/tomslicer.h";
+			name = "tomslicer.h";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.c.h";
+		};
+		4C10F15E1D2AE1CFDFB7F81C = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/qtomviewresources.qrc";
+			name = "qtomviewresources.qrc";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "text";
+		};
+		2DBA9BEA18E6D11FAF3A9193 = {
+			fileRef = "4C10F15E1D2AE1CFDFB7F81C";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		1B5EA2E87D318AFD73415995 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/anaconda2/mkspecs/features/data/dummy.cpp";
+			name = "dummy.cpp";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		5BA5A778F93328BB43DED73E = {
+			fileRef = "1B5EA2E87D318AFD73415995";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		B0B14CE860E99AE2BEC1F33B = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/mainwindow.ui";
+			name = "mainwindow.ui";
+			sourceTree = "<absolute>";
+		};
+		64B149638A16B7BDB25B92F9 = {
+			fileRef = "B0B14CE860E99AE2BEC1F33B";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		C185CBF4A6EC9F37DF4B30E6 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/infodialog.ui";
+			name = "infodialog.ui";
+			sourceTree = "<absolute>";
+		};
+		3E5FA79E383CA8322C508825 = {
+			fileRef = "C185CBF4A6EC9F37DF4B30E6";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		B5F48015449BBBA1FB0E9788 = {
+			isa = PBXFileReference;
+			path = "/Users/dm/Development/QTomView/QTomView.pro";
+			name = "QTomView.pro";
+			sourceTree = "<absolute>";
+			lastKnownFileType = "text";
+		};
+		25B08E2869634E9BCBA333A2 = {
+			isa = PBXGroup;
+			children = (
+				"279F46155DA41E60A9E60FCA",
+				"7701FC710570947C1D180609",
+				"D8FD6BE9E1DE4D0DD10B82FD",
+				"2D8096F4BE3E7A803A5BE11F",
+				"E03AB4EE65B8E3E6EE5A4BCA",
+				"53DE8476B88D29C87192F487");
+			name = "Generated Sources";
+			sourceTree = "<group>";
+		};
+		87DF60DE337FB58864343E39 = {
+			isa = PBXGroup;
+			children = (
+				"4C10F15E1D2AE1CFDFB7F81C");
+			name = "Resources";
+			sourceTree = "<group>";
+		};
+		2EB56BE3C2D93CDAB0C52E67 = {
+			isa = PBXGroup;
+			children = (
+				"DD40D5F22E1128FD4F3D7EC9",
+				"E5E74D6FAD52EBAD87D49FA2",
+				"6405CA3473E2DA60A8D3C1B7",
+				"EB1DDA631ED83F3177854741",
+				"EBC6FCFB42E75964CE6EF247",
+				"F7EBF46D79719DCD46442C0F",
+				"73C71BFF3336A9E1E2B38E99",
+				"1B1EBC0E282ED7EF14AEF93C",
+				"64A2E236C0AB66D27F03DC21",
+				"B63FD1D5A7098061B9F36F07");
+			name = "Sources";
+			sourceTree = "<group>";
+		};
+		B8254625CFD509ED2A24A166 = {
+			isa = PBXGroup;
+			children = (
+				"1B5EA2E87D318AFD73415995");
+			name = "Sources [moc_predefs]";
+			sourceTree = "<group>";
+		};
+		12E908B8A1C3C07C115504F5 = {
+			isa = PBXGroup;
+			children = (
+				"B0B14CE860E99AE2BEC1F33B",
+				"C185CBF4A6EC9F37DF4B30E6");
+			name = "Sources [uic]";
+			sourceTree = "<group>";
+		};
+		74B182DB50CB5611B5C1C297 = {
+			isa = PBXGroup;
+			children = (
+				"B5F48015449BBBA1FB0E9788");
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7EF0942E79C014DCEC8976BC = {
+			buildActionMask = 2147483647;
+			files = (
+				);
+			isa = PBXShellScriptBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Qt Preprocessors";
+			shellPath = "/bin/sh";
+			shellScript = "make -C /Users/dm/Development/QTomView/ -f QTomView.xcodeproj/qt_preprocess.mak";
+			showEnvVarsInLog = "0";
+		};
+		F7E50F631C51CD5B5DC0BC43 = {
+			buildActionMask = 2147483647;
+			files = (
+				"565DDDE60603485A7F71CAFC",
+				"2D3AEE2FB127FE7283596ABF",
+				"0F63FB8830A7226761B53232",
+				"D3AF2DC8659364CB7E25CADC",
+				"C1F5F7CAB21BEA2DCF5DE5D0",
+				"C523A4D7C682BA41200B3CAB",
+				"48A0E210977177AC2BBA5BEC",
+				"435329E43EBB5CDC6DB6F0FF",
+				"F93192B50E5BF9D57672DB1E",
+				"5BA5A778F93328BB43DED73E");
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Compile Sources";
+		};
+		AB0D41997E7795C60968CAA6 = {
+			isa = PBXFileReference;
+			name = "Qt5Widgets";
+			path = "/Users/dm/anaconda2/lib/libQt5Widgets$(QT_LIBRARY_SUFFIX).5.9.7.dylib";
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		03E16F3C0B5387C11F1B6E9C = {
+			fileRef = "AB0D41997E7795C60968CAA6";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		2B774D8E4178765CE52EAAF5 = {
+			isa = PBXFileReference;
+			name = "DiskArbitration.framework";
+			path = "/System/Library/Frameworks/DiskArbitration.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+			lastKnownFileType = "wrapper.framework";
+		};
+		A99B2AA0F9CBBDD12BA126A4 = {
+			fileRef = "2B774D8E4178765CE52EAAF5";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		A1A67BEAA744704B29168D39 = {
+			isa = PBXFileReference;
+			name = "IOKit.framework";
+			path = "/System/Library/Frameworks/IOKit.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+			lastKnownFileType = "wrapper.framework";
+		};
+		8D267F2E4776F0ECA2F49DC8 = {
+			fileRef = "A1A67BEAA744704B29168D39";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		87E51D502E8864FD5CF45ABD = {
+			isa = PBXFileReference;
+			name = "Qt5Gui";
+			path = "/Users/dm/anaconda2/lib/libQt5Gui$(QT_LIBRARY_SUFFIX).5.9.7.dylib";
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		5A114BC4EE55FC7BB3AE1F2B = {
+			fileRef = "87E51D502E8864FD5CF45ABD";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		AFD655E28191B0096061A091 = {
+			isa = PBXFileReference;
+			name = "Qt5Core";
+			path = "/Users/dm/anaconda2/lib/libQt5Core$(QT_LIBRARY_SUFFIX).5.9.7.dylib";
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		5BA05BA7865AFD1218D6C543 = {
+			fileRef = "AFD655E28191B0096061A091";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		D4B32C2222F82AC56BADEB21 = {
+			isa = PBXFileReference;
+			name = "OpenGL.framework";
+			path = "/System/Library/Frameworks/OpenGL.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+			lastKnownFileType = "wrapper.framework";
+		};
+		8771A8C96E9C391044035D99 = {
+			fileRef = "D4B32C2222F82AC56BADEB21";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		8D9815BDB5BD9F90D2BC05C5 = {
+			isa = PBXFileReference;
+			name = "AGL.framework";
+			path = "/System/Library/Frameworks/AGL.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+			lastKnownFileType = "wrapper.framework";
+		};
+		E45E51A644D5FC9F942ECE55 = {
+			fileRef = "8D9815BDB5BD9F90D2BC05C5";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		AF39DD055C3EF8226FBE929D = {
+			children = (
+				"AB0D41997E7795C60968CAA6",
+				"2B774D8E4178765CE52EAAF5",
+				"A1A67BEAA744704B29168D39",
+				"87E51D502E8864FD5CF45ABD",
+				"AFD655E28191B0096061A091",
+				"D4B32C2222F82AC56BADEB21",
+				"8D9815BDB5BD9F90D2BC05C5");
+			isa = PBXGroup;
+			name = "Frameworks";
+			sourceTree = "<group>";
+		};
+		D1C883685E82D5676953459A = {
+			buildActionMask = 2147483647;
+			files = (
+				"03E16F3C0B5387C11F1B6E9C",
+				"A99B2AA0F9CBBDD12BA126A4",
+				"8D267F2E4776F0ECA2F49DC8",
+				"5A114BC4EE55FC7BB3AE1F2B",
+				"5BA05BA7865AFD1218D6C543",
+				"8771A8C96E9C391044035D99",
+				"E45E51A644D5FC9F942ECE55");
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Link Binary With Libraries";
+		};
+		30414803F31797EB689AE508 = {
+			buildActionMask = 2147483647;
+			files = (
+				);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Copy Bundle Resources";
+		};
+		99542592E9780B9225F24AA8 = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB42A59B0BE7FDFDF3AB7069 = {
+			isa = PBXFileReference;
+			includeInIndex = 0;
+			explicitFileType = "wrapper.application";
+			path = "QTomView.app";
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE0A091FDBFB3E9C31B7A1BD = {
+			children = (
+				"FB42A59B0BE7FDFDF3AB7069");
+			isa = PBXGroup;
+			name = "Products";
+			sourceTree = "<group>";
+		};
+		E8C543AB96796ECAA2E65C57 = {
+			children = (
+				"2EB56BE3C2D93CDAB0C52E67",
+				"25B08E2869634E9BCBA333A2",
+				"87DF60DE337FB58864343E39",
+				"B8254625CFD509ED2A24A166",
+				"12E908B8A1C3C07C115504F5",
+				"74B182DB50CB5611B5C1C297",
+				"AF39DD055C3EF8226FBE929D",
+				"FE0A091FDBFB3E9C31B7A1BD");
+			isa = PBXGroup;
+			name = "QTomView";
+			sourceTree = "<group>";
+		};
+		6C033EEA57B10EB727472AA8 = {
+			buildPhases = (
+				"5E618435888B9D49F8540165",
+				"7EF0942E79C014DCEC8976BC");
+			dependencies = (
+				);
+			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59;
+			isa = PBXAggregateTarget;
+			buildRules = (
+);
+			productName = "Qt Preprocess";
+			name = "Qt Preprocess";
+		};
+		76E11528273073B796F4ADE3 = {
+			isa = PBXTargetDependency;
+			target = "6C033EEA57B10EB727472AA8";
+		};
+		7A8375D9E870056CD89416D9 = {
+			buildPhases = (
+				"F7E50F631C51CD5B5DC0BC43",
+				"D1C883685E82D5676953459A",
+				"30414803F31797EB689AE508",
+				"99542592E9780B9225F24AA8");
+			dependencies = (
+				"76E11528273073B796F4ADE3");
+			productReference = "FB42A59B0BE7FDFDF3AB7069";
+			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59;
+			isa = PBXNativeTarget;
+			buildRules = (
+);
+			productType = "com.apple.product-type.application";
+			name = "QTomView";
+			productName = "QTomView";
+		};
+		3AA6C32AC930069E80220CF1 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = "NO";
+				"ARCHS[sdk=macosx*]" = "x86_64";
+				COPY_PHASE_STRIP = "NO";
+				DEVELOPMENT_TEAM = "2KGDZZTS3J";
+				ENABLE_BITCODE = "NO";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				ONLY_ACTIVE_ARCH = "YES";
+				PRODUCT_NAME = "QTomView";
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = "macosx";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				CC = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang";
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				INFOPLIST_FILE = "Info.plist";
+				SYMROOT = "/Users/dm/Development/QTomView//.xcode";
+				CONFIGURATION_BUILD_DIR = "/Users/dm/Development/QTomView//$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				DYLIB_CURRENT_VERSION = "1.0.0";
+				DYLIB_COMPATIBILITY_VERSION = "1.0";
+				MACOSX_DEPLOYMENT_TARGET = "10.10";
+				HEADER_SEARCH_PATHS = (
+					".",
+					"../../anaconda2/include/qt",
+					"../../anaconda2/include/qt/QtWidgets",
+					"../../anaconda2/include/qt/QtGui",
+					"../../anaconda2/include/qt/QtCore",
+					".",
+					"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers",
+					"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AGL.framework/Headers",
+					".",
+					"../../anaconda2/mkspecs/macx-clang");
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/dm/anaconda2/lib",
+					"/System/Library/Frameworks/");
+				FRAMEWORK_SEARCH_PATHS = "";
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-O2",
+					"-Wall",
+					"-W",
+					"-fPIC",
+					"-DQT_NO_DEBUG",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB");
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-stdlib=libc++",
+					"-Wall",
+					"-O2",
+					"-std=gnu++11",
+					"-Wall",
+					"-W",
+					"-fPIC",
+					"-DQT_NO_DEBUG",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB");
+				OTHER_LDFLAGS = (
+						"-stdlib=libc++",
+						"-headerpad_max_install_names",
+						"-Wl,-rpath,@executable_path/Frameworks",
+						"-Wl,-rpath,/Users/dm/anaconda2/lib",
+						"-L/Users/dm/anaconda2/lib");
+				ARCHS = "x86_64";
+			};
+			name = "Debug";
+		};
+		77418F46922677BB04ED38DD = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = "NO";
+				"ARCHS[sdk=macosx*]" = "x86_64";
+				COPY_PHASE_STRIP = "NO";
+				DEVELOPMENT_TEAM = "2KGDZZTS3J";
+				ENABLE_BITCODE = "NO";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				ONLY_ACTIVE_ARCH = "YES";
+				PRODUCT_NAME = "QTomView";
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = "macosx";
+				PRODUCT_NAME = "QTomView";
+			};
+			name = "Debug";
+		};
+		339EE1B2CC4FC24589A0EA95 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = "NO";
+				"ARCHS[sdk=macosx*]" = "x86_64";
+				COPY_PHASE_STRIP = "NO";
+				DEVELOPMENT_TEAM = "2KGDZZTS3J";
+				ENABLE_BITCODE = "NO";
+				PRODUCT_NAME = "QTomView";
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = "macosx";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				CC = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang";
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				INFOPLIST_FILE = "Info.plist";
+				SYMROOT = "/Users/dm/Development/QTomView//.xcode";
+				CONFIGURATION_BUILD_DIR = "/Users/dm/Development/QTomView//$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				DYLIB_CURRENT_VERSION = "1.0.0";
+				DYLIB_COMPATIBILITY_VERSION = "1.0";
+				MACOSX_DEPLOYMENT_TARGET = "10.10";
+				HEADER_SEARCH_PATHS = (
+					".",
+					"../../anaconda2/include/qt",
+					"../../anaconda2/include/qt/QtWidgets",
+					"../../anaconda2/include/qt/QtGui",
+					"../../anaconda2/include/qt/QtCore",
+					".",
+					"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers",
+					"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AGL.framework/Headers",
+					".",
+					"../../anaconda2/mkspecs/macx-clang");
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/dm/anaconda2/lib",
+					"/System/Library/Frameworks/");
+				FRAMEWORK_SEARCH_PATHS = "";
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-O2",
+					"-Wall",
+					"-W",
+					"-fPIC",
+					"-DQT_NO_DEBUG",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB");
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-stdlib=libc++",
+					"-Wall",
+					"-O2",
+					"-std=gnu++11",
+					"-Wall",
+					"-W",
+					"-fPIC",
+					"-DQT_NO_DEBUG",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB");
+				OTHER_LDFLAGS = (
+						"-stdlib=libc++",
+						"-headerpad_max_install_names",
+						"-Wl,-rpath,@executable_path/Frameworks",
+						"-Wl,-rpath,/Users/dm/anaconda2/lib",
+						"-L/Users/dm/anaconda2/lib");
+				ARCHS = "x86_64";
+			};
+			name = "Release";
+		};
+		6666AA5E688052234F6758D8 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = "NO";
+				"ARCHS[sdk=macosx*]" = "x86_64";
+				COPY_PHASE_STRIP = "NO";
+				DEVELOPMENT_TEAM = "2KGDZZTS3J";
+				ENABLE_BITCODE = "NO";
+				PRODUCT_NAME = "QTomView";
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = "macosx";
+				PRODUCT_NAME = "QTomView";
+			};
+			name = "Release";
+		};
+		DAC4C1AA5EDEA1C85E9CA5E6 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"3AA6C32AC930069E80220CF1",
+				"339EE1B2CC4FC24589A0EA95");
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Release";
+		};
+		6CC3B5D2136C7CD6A5CF5A59 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"77418F46922677BB04ED38DD",
+				"6666AA5E688052234F6758D8");
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Release";
+		};
+		6DB9C3763D02B1415CD9D565 = {
+			hasScannedForEncodings = 1;
+			compatibilityVersion = "Xcode 3.2";
+			isa = PBXProject;
+			mainGroup = "E8C543AB96796ECAA2E65C57";
+			productRefGroup = "FE0A091FDBFB3E9C31B7A1BD";
+			buildConfigurationList = "DAC4C1AA5EDEA1C85E9CA5E6";
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"7A8375D9E870056CD89416D9",
+				"6C033EEA57B10EB727472AA8");
+			attributes = {
+				TargetAttributes = {
+				};
+			};
+		};
+	};
+	rootObject = "6DB9C3763D02B1415CD9D565";
+}

@@ -15,14 +15,13 @@ QMAKE_CXXFLAGS += -Wall
 SOURCES += main.cpp\
         mainwindow.cpp \
     infodialog.cpp \
-    qtomviewview.cpp \
+    qtomv_view.cpp \
     tomslicer.cpp
 
 HEADERS  += mainwindow.h \
     TomHeader.h \
-    TomView.h \
     infodialog.h \
-    qtomviewview.h \
+    qtomv_view.h \
     tomslicer.h
 
 FORMS    += mainwindow.ui \
