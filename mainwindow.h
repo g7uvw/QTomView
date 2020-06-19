@@ -34,7 +34,7 @@ private:
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
     QTomV_View *view_area;
-
+    
 public:
 
     struct thead m_Header;

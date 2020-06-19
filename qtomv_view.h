@@ -26,7 +26,18 @@ public:
 
     void zoom(int zoomlevelpercent);
     void ReceiveHeader(thead header);
-    void UpdateSlice(unsigned int);
+   
+    
+    struct s_Slice
+    {
+        uint8_t Plane  = XYPLANE;
+        size_t  XSlice = 0;
+        size_t  YSlice = 0;
+        size_t  ZSlice = 0;
+        
+    };
+     
+    void UpdateSlice(s_Slice Slice);
 
 protected:
     QByteArray tomData;

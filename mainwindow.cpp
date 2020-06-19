@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include "infodialog.h"
 #include "qtomv_view.h"
-//#include "TomView.h"
 
 #include <QMessageBox>
 #include <QFile>
@@ -51,6 +50,7 @@ MainWindow::~MainWindow()
 }
 
 
+
 void MainWindow::on_actionOpen_triggered()
 {
     m_FileName = QFileDialog::getOpenFileName(this, tr("Open File"),"",tr("Files (*.tom)"));
@@ -80,30 +80,60 @@ void MainWindow::on_actionOpen_triggered()
     m_XSlice = m_Header.xsize / 2;
     m_YSlice = m_Header.ysize / 2;
     m_ZSlice = m_Header.zsize / 2;
-    view_area->UpdateSlice(m_Plane);
-
+    
+    QTomV_View::s_Slice Slice;
+    Slice.Plane = m_Plane;
+    Slice.XSlice = m_XSlice;
+    Slice.YSlice = m_YSlice;
+    Slice.ZSlice = m_ZSlice;
+    view_area->UpdateSlice(Slice);
 }
 
 
 
 void MainWindow::on_actionDown_Slice_triggered()
 {
+    QTomV_View::s_Slice Slice;
+    
+    // Set some defaults in case things go wrong.
+    Slice.Plane  = XYPLANE;
+    Slice.XSlice = 0;
+    Slice.YSlice = 0;
+    Slice.ZSlice = 0;
+        
     switch (m_Plane)
     {
     case XYPLANE:
+            Slice.Plane = XYPLANE;
             if (m_ZSlice == 0)
+            {
+                Slice.ZSlice = 0;
                 return;
+            }
             --m_ZSlice;
+            Slice.ZSlice = m_ZSlice;
             break;
+            
         case XZPLANE:
+            Slice.Plane = XZPLANE;
             if (m_YSlice == 0)
+            {
+                Slice.YSlice = 0;
                 return;
+            }
             --m_YSlice;
+            Slice.YSlice = m_YSlice;
             break;
+            
         case YZPLANE:
+            Slice.Plane = YZPLANE;
             if (m_XSlice == 0)
+            {
+                Slice.XSlice = 0;
                 return;
+            }
             --m_XSlice;
+            Slice.XSlice = m_XSlice;
             break;
         }
         --m_CurrentSlice;
@@ -111,7 +141,7 @@ void MainWindow::on_actionDown_Slice_triggered()
     if (m_CurrentSlice == 0)
         m_CurrentSlice = 0;
 
-    view_area->UpdateSlice(m_Plane);
+    view_area->UpdateSlice(Slice);
 
 }
 
@@ -136,67 +166,48 @@ void MainWindow::on_actionUpSlice_triggered()
             break;
         }
         ++m_CurrentSlice;
-
-    view_area->UpdateSlice(m_Plane);
+   
+    QTomV_View::s_Slice Slice;
+    Slice.Plane = m_Plane;
+    Slice.XSlice = m_XSlice;
+    Slice.YSlice = m_YSlice;
+    Slice.ZSlice = m_ZSlice;
+    view_area->UpdateSlice(Slice);
 }
 
-
-//void MainWindow::UpdateSlice()
-//{
-//    CreateDefaultLookup();
-//    switch (m_Plane)
-//    {
-//    case YZPLANE:{
-////      const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, size_t Xoffset, size_t xsize, size_t ysize, size_t zsize)
-//        const std::vector<uint8_t>&YZ = slicer->YZSlice(volume, m_XSlice, m_Header.xsize, m_Header.ysize, m_Header.zsize);
-//        QImage  YZSlice(YZ.data(),m_Header.ysize,m_Header.zsize,m_Header.ysize,QImage::Format_Indexed8);
-//        YZSlice.setColorTable(colorTable);
-
-//        view_area->resize(YZSlice.width(),YZSlice.height());
-//        view_area->wipe();
-//        view_area->showSlice(YZSlice);
-//        break;}
-
-//    case XZPLANE:{
-//      //const std::vector<uint8_t>& TOMSlicer::XZSlice(const std::vector<uint8_t>& vol, size_t xsize, size_t ysize, size_t Yoffset, size_t zsize)
-//        const std::vector<uint8_t>&XZ = slicer->XZSlice(volume, m_Header.xsize, m_Header.ysize, m_YSlice, m_Header.zsize);
-//        QImage  XZSlice(XZ.data(),m_Header.xsize,m_Header.zsize,m_Header.xsize,QImage::Format_Indexed8);
-//        XZSlice.setColorTable(colorTable);
-
-//        view_area->resize(XZSlice.width(),XZSlice.height());
-//        view_area->showSlice(XZSlice);
-//        break;}
-
-//    default:
-//    case XYPLANE:{
-//        const std::vector<uint8_t>&XY = slicer->XYSlice(volume, m_Header.xsize, m_Header.ysize, m_ZSlice);
-//        QImage  XYSlice(XY.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
-//        XYSlice.setColorTable(colorTable);
-
-//        view_area->resize(XYSlice.width(),XYSlice.height());
-//        view_area->showSlice(XYSlice);
-//        break;}
-//    }
-
-//}
 
 
 void MainWindow::on_actionXY_Slice_triggered()
 {
     m_Plane = XYPLANE;
-    view_area->UpdateSlice(m_Plane);
+    QTomV_View::s_Slice Slice;
+    Slice.Plane = m_Plane;
+    Slice.XSlice = m_XSlice;
+    Slice.YSlice = m_YSlice;
+    Slice.ZSlice = m_ZSlice;
+    view_area->UpdateSlice(Slice);
 }
 
 void MainWindow::on_actionYZ_Slice_triggered()
 {
     m_Plane = YZPLANE;
-    view_area->UpdateSlice(m_Plane);
+    QTomV_View::s_Slice Slice;
+    Slice.Plane = m_Plane;
+    Slice.XSlice = m_XSlice;
+    Slice.YSlice = m_YSlice;
+    Slice.ZSlice = m_ZSlice;
+    view_area->UpdateSlice(Slice);
 }
 
 void MainWindow::on_actionXZ_Slice_triggered()
 {
     m_Plane = XZPLANE;
-    view_area->UpdateSlice(m_Plane);
+    QTomV_View::s_Slice Slice;
+    Slice.Plane = m_Plane;
+    Slice.XSlice = m_XSlice;
+    Slice.YSlice = m_YSlice;
+    Slice.ZSlice = m_ZSlice;
+    view_area->UpdateSlice(Slice);
 }
 
 
@@ -236,15 +247,6 @@ void MainWindow::on_actionInformation_triggered()
 }
 
 
-//void MainWindow::CreateDefaultLookup()
-//{
-//    QVector<QRgb> colorTable;
-//    for (int i = 0; i < 256; i++)
-//        colorTable.push_back(QColor(i, i, i).rgb());
-//}
-
-
-
 
 
 void MainWindow::on_actionExit_triggered()
@@ -280,30 +282,5 @@ void MainWindow::on_action300_triggered()
 }
 
 
-
-
-
-void MainWindow::CreateBitmap()
-{
-    //    unsigned int m_YSize,m_XSize,m_ZSize;
-    //    m_YSize = m_Header.ysize;
-    //    m_XSize = m_Header.xsize;
-    //    m_ZSize = m_Header.zsize;
-
-    //    int XRoundupSize;
-    //        if (m_XSize % 4)
-    //            XRoundupSize = m_XSize + 4 - (m_XSize % 4);
-    //        else
-    //            XRoundupSize = m_XSize;
-    //        if (m_BitmapArray != NULL)
-    //            delete [] m_BitmapArray;
-    //        if (m_BitmapBuffer != NULL)
-    //            delete [] m_BitmapBuffer;
-    //        m_BitmapBuffer = new unsigned char [m_YSize*XRoundupSize];
-    //        m_BitmapArray = new unsigned char * [m_YSize];
-    //        m_BitmapBufferSize = m_YSize*XRoundupSize;
-    //        for (unsigned int a=0; a<m_YSize; ++a)
-    //            m_BitmapArray[a] = &m_BitmapBuffer[a*XRoundupSize];
-}
 
 
