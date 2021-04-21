@@ -39,8 +39,26 @@ MainWindow::MainWindow(QWidget *parent) :
     view_area = createMdiChild();
     view_area->autoFillBackground();
     view_area->showMaximized();
-    //slicer = TOMSlicer::getInstance();
+    
+    statusPositions = new QLabel(this);
+    statusPosLAC = new QLabel(this);
+    statusPosToOrigin = new QLabel(this);
+    statusPosAngle = new QLabel(this);
+    statusCubeLAC = new QLabel(this);
 
+    statusProgressBar = new QProgressBar(this);
+    ui->statusBar->addPermanentWidget(statusPositions);
+    ui->statusBar->addPermanentWidget(statusPosLAC);
+    ui->statusBar->addPermanentWidget(statusPosToOrigin);
+    ui->statusBar->addPermanentWidget(statusPosAngle);
+    ui->statusBar->addPermanentWidget(statusCubeLAC);
+
+    ui->statusBar->addPermanentWidget(statusProgressBar,1);
+    //statusBar()->showMessage("Hello");
+    statusPositions->setText("100,200,300");
+    
+    
+    
 }
 
 
@@ -218,7 +236,6 @@ QTomV_View *MainWindow::createMdiChild()
     mdiArea->addSubWindow(child);
     return child;
 }
-
 
 
 

@@ -34,6 +34,12 @@ private:
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
     QTomV_View *view_area;
+    QLabel *statusPositions;
+    QLabel *statusPosLAC;
+    QLabel *statusPosToOrigin;
+    QLabel *statusPosAngle;
+    QLabel *statusCubeLAC;
+    QProgressBar *statusProgressBar;
     
 public:
 

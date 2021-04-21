@@ -88,9 +88,9 @@ const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, 
         return Slice;
     }
 
-    for (uint16_t i = 0; i < zsize; i++)
+    for (size_t i = 0; i < zsize; i++)
         {
-            for (uint16_t j = 0; j < ysize; j++)
+            for (size_t j = 0; j < ysize; j++)
             {
                 //size_t wibble = (header.xsize * header.ysize * i) + (header.xsize * j) + Xoffset;
                 size_t wibble = (xsize * ysize * i) + (xsize * j) + Xoffset;

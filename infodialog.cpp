@@ -25,7 +25,7 @@ InfoDialog::InfoDialog(const thead &header,QWidget *parent) : QDialog(parent),
     ui->label_projections->setText(ui->label_projections->text()+QString::number(header.num_proj));
 
     unsigned int wibble = pMw->m_Header.xsize;
-    ui->label_belong->setText(QString(wibble));
+    ui->label_belong->setText(QString(QChar(wibble)));
     //ui->label_date->setText(pMw->m_Header.time);
     //ui->lable_belong->setText(mw->m_Header.owner);
 
