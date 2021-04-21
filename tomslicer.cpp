@@ -14,10 +14,12 @@ TOMSlicer* TOMSlicer::getInstance()
     return(instance_);
 }
 
+
+// XY Slice
 const std::vector<uint8_t>& TOMSlicer::XYSlice(const std::vector<uint8_t>& vol, size_t xsize, size_t ysize, size_t Zoffset)
 {
     Slice.clear();
-    // XY Slice
+
     size_t slicesize = xsize * ysize;
     std::clog<< __FUNCTION__ << '\n';
     std::clog << "Trying to allocate vector to store XY slice."  << '\n';
@@ -41,12 +43,11 @@ const std::vector<uint8_t>& TOMSlicer::XYSlice(const std::vector<uint8_t>& vol, 
     return Slice;
 }
 
-
+ //XZ Slice at fixed index Y
 const std::vector<uint8_t>& TOMSlicer::XZSlice(const std::vector<uint8_t>& vol, size_t xsize, size_t ysize, size_t Yoffset, size_t zsize)
 {
     Slice.clear();
-     //    XZ Slice at fixed index Y
-    //std::vector<uint8_t> Slice;
+
     std::clog<< __FUNCTION__ << '\n';
     std::clog << "Trying to allocate vector to store XZ slice."  << '\n';
     try {
@@ -58,24 +59,22 @@ const std::vector<uint8_t>& TOMSlicer::XZSlice(const std::vector<uint8_t>& vol, 
         return Slice;
     }
 
-
     for (size_t z = 0; z < zsize; z++)
         {
             for (size_t x = 0; x < xsize; x++)
             {
-                size_t wibble = (xsize * ysize * z + xsize * Yoffset + x);
-                //std::vector<uint8_t>::const_iterator wobble = Volume.begin() + wibble;
-                Slice.push_back(vol.at(wibble));
+                size_t tmp = (xsize * ysize * z + xsize * Yoffset + x);
+                Slice.push_back(vol.at(tmp));
             }
         }
         return Slice;
 }
 
+ //YZ Slice at fixed index X
 const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, size_t Xoffset, size_t xsize, size_t ysize, size_t zsize)
 {
     Slice.clear();
-    //std::vector<uint8_t> Slice;
-    //    YZ Slice at fixed index X
+
 
     std::clog<< __FUNCTION__ << '\n';
     std::clog << "Trying to allocate vector to store YZ slice."  << '\n';
@@ -92,19 +91,17 @@ const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, 
         {
             for (size_t j = 0; j < ysize; j++)
             {
-                //size_t wibble = (header.xsize * header.ysize * i) + (header.xsize * j) + Xoffset;
-                size_t wibble = (xsize * ysize * i) + (xsize * j) + Xoffset;
-                //YZSlice.push_back(Volume.at((header.xsize * header.ysize * z) + (header.xsize * y) + Xoffset));
-                Slice.push_back(vol.at((wibble)));
+                size_t tmp = (xsize * ysize * i) + (xsize * j) + Xoffset;
+                Slice.push_back(vol.at((tmp)));
             }
         }
 
-    std::ofstream f("../YZ.raw");
-            for(std::vector<uint8_t>::const_iterator i = Slice.begin(); i != Slice.end(); ++i) {
-                f << *i;
-            }
-
-            f.close();
+//uncomment to dump out vector as raw binary for testing
+//    std::ofstream f("../YZ.raw");
+//            for(std::vector<uint8_t>::const_iterator i = Slice.begin(); i != Slice.end(); ++i) {
+//                f << *i;
+//            }
+//    f.close();
 
     return Slice;
 }
