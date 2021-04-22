@@ -9,6 +9,8 @@
 #include <QtWidgets>
 #include <QByteArray>
 #include <QImageWriter>
+#include <QWheelEvent>
+
 #include <iterator>
 #include <vector>
 #include <iostream>
@@ -107,6 +109,19 @@ void MainWindow::on_actionOpen_triggered()
     view_area->UpdateSlice(Slice);
 }
 
+
+void MainWindow::wheelEvent(QWheelEvent *event)
+{
+
+    auto numDegrees = event->angleDelta();
+
+    if (numDegrees.y() > 0)
+        on_actionUpSlice_triggered();
+    else
+        on_actionDown_Slice_triggered();
+
+    event->accept();
+}
 
 
 void MainWindow::on_actionDown_Slice_triggered()

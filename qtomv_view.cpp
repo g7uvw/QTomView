@@ -49,7 +49,7 @@ void QTomV_View::zoom(int zoomlevelpercent)
 void QTomV_View::CreateDefaultLookup()
 {
     QVector<QRgb> colorTable;
-    for (int i = 0; i < 256; i++)
+    for (auto i = 0; i < 256; i++)
         colorTable.push_back(QColor(i, i, i).rgb());
 }
 

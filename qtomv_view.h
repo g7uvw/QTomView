@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include <QtCore>
 #include <QtWidgets>
+#include <QWheelEvent>
 #include "TomHeader.h"
 #include "tomslicer.h"
 ///#include "TomView.h"
