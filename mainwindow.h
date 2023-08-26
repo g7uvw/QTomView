@@ -92,6 +92,7 @@ private slots:
     void on_actionYZ_Slice_triggered();
     void on_actionXZ_Slice_triggered();
     void wheelEvent(QWheelEvent *event);
+    //void mouseMoveEvent(QMouseEvent *event);
     void on_action25_triggered();
     void on_action50_triggered();
     void on_action100_triggered();

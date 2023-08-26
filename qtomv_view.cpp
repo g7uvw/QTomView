@@ -1,6 +1,6 @@
 
 #include "qtomv_view.h"
-
+#include <QDebug>
 
 QTomV_View::QTomV_View()
 {
@@ -11,7 +11,11 @@ QTomV_View::QTomV_View()
     scene = new QGraphicsScene(0, 0, this->x(), this->y(), this);
     view->setScene(scene);
     setCentralWidget(view);
+    //setMouseTracking(true);
     slicer = TOMSlicer::getInstance();
+
+    // cargo cult programming - https://stackoverflow.com/questions/32714105/mousemoveevent-is-not-called
+    QCoreApplication::instance()->installEventFilter(this);
 }
 
 void QTomV_View::wipe()
@@ -27,12 +31,41 @@ void QTomV_View::ReceiveHeader(thead header)
 void QTomV_View::showSlice(QImage &slice)
 {
     scene->clear();
-    QPixmap currentslice(QPixmap::fromImage(slice));
+    currentslice = (QPixmap::fromImage(slice));
     scene->addPixmap(currentslice);
     scene->update();
+    view->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    view->resize(currentslice.width(),currentslice.height());
     view->update();
 }
 
+
+void QTomV_View::mousePressEvent ( QMouseEvent * e )
+{
+((QWidget*)parent())->raise();
+}
+
+
+// cargo cult programming - https://stackoverflow.com/questions/32714105/mousemoveevent-is-not-called
+// just having a mousemove event never got triggered, have to do it this way. Dunno why.
+// tried both scene and view to filter on just those, no joy.
+// I can ignore the object, and just grab all mousemoves, but then the origin is at the top left of the main window
+// Ideally only want to get messages when I'm over the image I've drawn and to get mousemove numbers relative to that.
+
+bool QTomV_View::eventFilter(QObject *object, QEvent *event)
+{
+    if(event->type() == QEvent::MouseMove)
+    {
+        auto mfunc = static_cast<QMouseEvent*>(event);
+        QPointF mousePosition = mfunc->pos();
+        //qInfo() << QString::number( mousePosition.x() ) + ", " +QString::number( mousePosition.y() );
+        //qDebug() << "Object being called " << object->objectName();
+        return true;
+    }
+
+    // Other event type checks here...
+    return false;//the signal will be delivered other filters
+}
 
 QString QTomV_View::strippedName(const QString &fullFileName)
 {

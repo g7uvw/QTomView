@@ -37,10 +37,15 @@ MainWindow::MainWindow(QWidget *parent) :
     mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setCentralWidget(mdiArea);
+    //setMouseTracking(true);
+    //ui->centralWidget->setMouseTracking(true);
 
     view_area = createMdiChild();
     view_area->autoFillBackground();
-    view_area->showMaximized();
+    //view_area->showMaximized();
+    view_area->showNormal();
+    view_area->activateWindow();
+    view_area->raise();
     
     statusPositions = new QLabel(this);
     statusPosLAC = new QLabel(this);
@@ -48,14 +53,14 @@ MainWindow::MainWindow(QWidget *parent) :
     statusPosAngle = new QLabel(this);
     statusCubeLAC = new QLabel(this);
 
-    statusProgressBar = new QProgressBar(this);
+    //statusProgressBar = new QProgressBar(this);
     ui->statusBar->addPermanentWidget(statusPositions);
     ui->statusBar->addPermanentWidget(statusPosLAC);
     ui->statusBar->addPermanentWidget(statusPosToOrigin);
     ui->statusBar->addPermanentWidget(statusPosAngle);
     ui->statusBar->addPermanentWidget(statusCubeLAC);
 
-    ui->statusBar->addPermanentWidget(statusProgressBar,1);
+    //ui->statusBar->addPermanentWidget(statusProgressBar,1);
     //statusBar()->showMessage("Hello");
     statusPositions->setText("100,200,300");
     
@@ -82,7 +87,7 @@ void MainWindow::on_actionOpen_triggered()
     size_t volumeBytes = m_Header.xsize*m_Header.ysize *m_Header.zsize;
     std::cerr << "Trying to allocate vector with storage for  " << volumeBytes << " bytes." << std::endl;
     try {
-        view_area->volume.resize(volumeBytes);
+        view_area->volume.reserve(volumeBytes);
     }
     catch (std::length_error& vecerror){
         std::cerr << vecerror.what() << std::endl;
@@ -122,6 +127,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
 
     event->accept();
 }
+
 
 
 void MainWindow::on_actionDown_Slice_triggered()

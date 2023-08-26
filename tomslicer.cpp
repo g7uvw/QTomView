@@ -3,12 +3,12 @@
 #include <fstream>
 
 // Define the static Singleton pointer
-TOMSlicer* TOMSlicer::instance_ = NULL;
+TOMSlicer* TOMSlicer::instance_ = nullptr;
 
 TOMSlicer* TOMSlicer::getInstance()
 {
     // Accessor to the singeton
-    if (instance_ == NULL) {
+    if (instance_ == nullptr) {
        instance_ = new TOMSlicer();
     }
     return(instance_);
@@ -35,8 +35,8 @@ const std::vector<uint8_t>& TOMSlicer::XYSlice(const std::vector<uint8_t>& vol, 
 
     size_t SliceOffset = Zoffset * slicesize;
 
-    std::vector<uint8_t>::const_iterator Slicebegin = vol.begin() + SliceOffset;
-    std::vector<uint8_t>::const_iterator Sliceend = Slicebegin + slicesize;
+   auto Slicebegin = vol.begin() + SliceOffset;
+   auto Sliceend = Slicebegin + slicesize;
 
     Slice.assign(Slicebegin, Sliceend);
 
@@ -53,6 +53,12 @@ const std::vector<uint8_t>& TOMSlicer::XZSlice(const std::vector<uint8_t>& vol, 
     try {
         Slice.reserve(xsize * zsize);
     }
+    catch (std::out_of_range& orerror){
+        std::cerr << orerror.what() <<"/n";
+        Slice.resize(0);
+        return Slice;
+    }
+
     catch (std::length_error& vecerror){
         std::cerr << vecerror.what() << '\n';
         Slice.resize(0); // on error set slice size to 0 and return zero sized slice
@@ -63,8 +69,21 @@ const std::vector<uint8_t>& TOMSlicer::XZSlice(const std::vector<uint8_t>& vol, 
         {
             for (size_t x = 0; x < xsize; x++)
             {
-                size_t tmp = (xsize * ysize * z + xsize * Yoffset + x);
-                Slice.push_back(vol.at(tmp));
+                auto tmp = (xsize * ysize * z + xsize * Yoffset + x);
+                try{
+                    Slice.push_back(vol.at(tmp));
+                }
+                catch (std::out_of_range& orerror){
+                    std::cerr << orerror.what() <<"/n";
+                    Slice.resize(0);
+                    return Slice;
+                }
+
+                catch (std::length_error& vecerror){
+                    std::cerr << vecerror.what() << '\n';
+                    Slice.resize(0); // on error set slice size to 0 and return zero sized slice
+                    return Slice;
+                }
             }
         }
         return Slice;
@@ -81,6 +100,11 @@ const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, 
     try {
         Slice.reserve(ysize * zsize);
     }
+    catch (std::out_of_range& orerror){
+        std::cerr << orerror.what() <<"/n";
+        Slice.resize(0);
+        return Slice;
+    }
     catch (std::length_error& vecerror){
         std::cerr << vecerror.what() << std::endl;
         Slice.resize(0); // on error set slice size to 0 and return zero sized slice
@@ -91,8 +115,21 @@ const std::vector<uint8_t>& TOMSlicer::YZSlice(const std::vector<uint8_t>& vol, 
         {
             for (size_t j = 0; j < ysize; j++)
             {
-                size_t tmp = (xsize * ysize * i) + (xsize * j) + Xoffset;
-                Slice.push_back(vol.at((tmp)));
+                auto tmp = (xsize * ysize * i) + (xsize * j) + Xoffset;
+                try{
+                    Slice.push_back(vol.at(tmp));
+                }
+                catch (std::out_of_range& orerror){
+                    std::cerr << orerror.what() <<"/n";
+                    Slice.resize(0);
+                    return Slice;
+                }
+
+                catch (std::length_error& vecerror){
+                    std::cerr << vecerror.what() << '\n';
+                    Slice.resize(0); // on error set slice size to 0 and return zero sized slice
+                    return Slice;
+                }
             }
         }
 
