@@ -1,6 +1,6 @@
 
 #include "qtomv_view.h"
-
+#include<QDebug>
 
 QTomV_View::QTomV_View()
 {
@@ -11,7 +11,11 @@ QTomV_View::QTomV_View()
     scene = new QGraphicsScene(0, 0, this->x(), this->y(), this);
     view->setScene(scene);
     setCentralWidget(view);
+    //setMouseTracking(true);
     slicer = TOMSlicer::getInstance();
+
+    // cargo cult programming - https://stackoverflow.com/questions/32714105/mousemoveevent-is-not-called
+    QCoreApplication::instance()->installEventFilter(this);
 }
 
 void QTomV_View::wipe()
@@ -27,12 +31,41 @@ void QTomV_View::ReceiveHeader(thead header)
 void QTomV_View::showSlice(QImage &slice)
 {
     scene->clear();
-    QPixmap currentslice(QPixmap::fromImage(slice));
+    currentslice = (QPixmap::fromImage(slice));
     scene->addPixmap(currentslice);
     scene->update();
+    view->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
+    view->resize(currentslice.width(),currentslice.height());
     view->update();
 }
 
+
+void QTomV_View::mousePressEvent ( QMouseEvent * e )
+{
+((QWidget*)parent())->raise();
+}
+
+
+// cargo cult programming - https://stackoverflow.com/questions/32714105/mousemoveevent-is-not-called
+// just having a mousemove event never got triggered, have to do it this way. Dunno why.
+// tried both scene and view to filter on just those, no joy.
+// I can ignore the object, and just grab all mousemoves, but then the origin is at the top left of the main window
+// Ideally only want to get messages when I'm over the image I've drawn and to get mousemove numbers relative to that.
+
+bool QTomV_View::eventFilter(QObject *object, QEvent *event)
+{
+    if(event->type() == QEvent::MouseMove)
+    {
+        auto mfunc = static_cast<QMouseEvent*>(event);
+        QPointF mousePosition = mfunc->pos();
+        qInfo() << QString::number( mousePosition.x() ) + ", " +QString::number( mousePosition.y() );
+        qDebug() << "Object being called " << object->objectName();
+        return true;
+    }
+
+    // Other event type checks here...
+    return false;//the signal will be delivered other filters
+}
 
 QString QTomV_View::strippedName(const QString &fullFileName)
 {
@@ -63,7 +96,7 @@ void QTomV_View::UpdateSlice(s_Slice Slice)
         const std::vector<uint8_t>&YZ = slicer->YZSlice(volume, Slice.XSlice, m_Header.xsize, m_Header.ysize, m_Header.zsize);
         QImage  YZSlice(YZ.data(),m_Header.ysize,m_Header.zsize,m_Header.ysize,QImage::Format_Indexed8);
         YZSlice.setColorTable(colorTable);
-        resize(YZSlice.width(),YZSlice.height());
+        //resize(YZSlice.width(),YZSlice.height());
         showSlice(YZSlice);
         break;
         }
@@ -73,7 +106,7 @@ void QTomV_View::UpdateSlice(s_Slice Slice)
         QImage  XZSlice(XZ.data(),m_Header.xsize,m_Header.zsize,m_Header.xsize,QImage::Format_Indexed8);
         XZSlice.setColorTable(colorTable);
 
-        resize(XZSlice.width(),XZSlice.height());
+        //resize(XZSlice.width(),XZSlice.height());
         showSlice(XZSlice);
         break;
         }
@@ -84,7 +117,7 @@ void QTomV_View::UpdateSlice(s_Slice Slice)
         QImage  XYSlice(XY.data(),m_Header.xsize,m_Header.ysize,m_Header.xsize,QImage::Format_Indexed8);
         XYSlice.setColorTable(colorTable);
 
-        resize(XYSlice.width(),XYSlice.height());
+        //resize(XYSlice.width(),XYSlice.height());
         showSlice(XYSlice);
         break;
         }

@@ -45,7 +45,8 @@ protected:
     QVector<QRgb> colorTable;
     struct thead m_Header;
     TOMSlicer* slicer;
- //void QTomV_View::wheelEvent(QWheelEvent* event);
+    bool eventFilter(QObject *obj, QEvent *event);
+    void mousePressEvent ( QMouseEvent * e );
 
     void CreateDefaultLookup(void);
     void wipe();
@@ -57,10 +58,11 @@ private:
     QString strippedName(const QString &fullFileName);
     QGraphicsView *view;
     QGraphicsScene *scene;
-
+    QPixmap currentslice;
     QString curFile;
     bool isUntitled;
 
+    //void mouseMoveEvent(QMouseEvent *event);
 };
 
 #endif // QTOMVIEWVIEW_H
